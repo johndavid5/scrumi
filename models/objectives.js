@@ -233,6 +233,8 @@ function Objectives(){
 						return;
 					}
 
+					items = [{"qty":4, "item":"Calling Birds"},{"qty":3, "item": "French Hens"},{"qty":2, "item": "Turtle Doves"},{"qty":1, "item": "Partridge in a Pear Tree"}];
+
 					logger.info(sWho + "(): items.length = " + items.length + "...");
 					if( items.length >= 1 ){
 						logger.info(sWho + "(): items[0] = " + items[0] + "...");

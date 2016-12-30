@@ -10,8 +10,8 @@ var app = express();
 
 var sWho = "server.js";
 
-logger.setLevel('INFO');
-//logger.setLevel('TRACE');
+//logger.setLevel('INFO');
+logger.setLevel('TRACE');
 logger.info(sWho + ": logger.getLevel= " + logger.getLevel() + "...");
 
 /** 
@@ -47,6 +47,13 @@ if( sharedUtils.getUrlPrefix().length > 0 ){
 	app.use(sharedUtils.getUrlPrefix() + '/api/forms', require('./controllers/api/forms'));
 }
 
+// Mount the controllers, Escamillo...
+app.use('/api/objectives', require('./controllers/api/objectives'));
+// And mount for possible reverse-proxy prefix as well...
+if( sharedUtils.getUrlPrefix().length > 0 ){
+	app.use(sharedUtils.getUrlPrefix() + '/api/objectives', require('./controllers/api/objectives'));
+}
+
 app.use('/api/formTypes', require('./controllers/api/formTypes'));
 // And mount for possible reverse-proxy prefix as well...
 if( sharedUtils.getUrlPrefix().length > 0 ){
@@ -60,7 +67,11 @@ if( sharedUtils.getUrlPrefix().length > 0 ){
 // In case we're coming in directly or via reverse proxy via /...
 app.use('/', require('./controllers/static'));
 // In case we're coming in via a reverse proxy via /sec_forms...
-app.use('/sec_forms', require('./controllers/static'));
+//app.use('/sec_forms', require('./controllers/static'));
+// And mount for possible reverse-proxy prefix as well...
+if( sharedUtils.getUrlPrefix().length > 0 ){
+	app.use(sharedUtils.getUrlPrefix() + '/', require('./controllers/static'));
+}
 
 var port = Config.port;
 
