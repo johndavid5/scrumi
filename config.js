@@ -5,7 +5,7 @@ module.exports = {
 	mongoDbUrl: "mongodb://localhost/forms_mean",
 	mongoDbFormsCollection: "forms",
 
-	mongoDbScrummerUrl: "mongodb://localhost/scrummer",
+	mongoDbScrummerUrl: "mongodb://localhost/scrumi",
 	mongoDbScrummerObjectivesCollection: "objectives",
 
 	secret: 'supercalifragilisticexpyalidocious',

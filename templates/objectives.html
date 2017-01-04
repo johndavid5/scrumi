@@ -2,7 +2,7 @@
 
 	<div class="row" ng-show="1==0">
 	  <div class="col-sm-4"></div>
-	  <h2 class="col-sm-4">Filings</h2>
+	  <h2 class="col-sm-4">Objectives</h2>
 	  <div class="col-sm-4"></div>
 	</div class="row">
 
@@ -150,24 +150,24 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 </div><!-- row -->
 
 	<!--
-	<div ng-cloak class="row" ng-show="filings && total_entries == 0">
+	<div ng-cloak class="row" ng-show="objectives && total_entries == 0">
 		<div class="col-md-12">
 			<h2>No Objectives Found</h2>
 		</div>
 	</div>
 	-->
 	<!--
-	<div ng-cloak class="row" ng-show="!filings">
+	<div ng-cloak class="row" ng-show="!objectives">
 		<div class="col-sm-12">
 			<h2>Search Objectives</h2>
 		</div>
 	</div>
 	-->
 
-	<div ng-cloak class="row" ng-show="filings && total_entries >= 0">
+	<div ng-cloak class="row" ng-show="objectives && total_entries >= 0">
 		<div class="col-sm-2"></div>
-		<h2 class="col-sm-7" ng-show="!filings">Search Objectives</h2>
-		<h2 class="col-sm-7" ng-show="filings && total_entries >= 0">{{total_entries==0 ? 'No' : ( total_entries | number ) }} Objective<span>{{total_entries == 1 ? '': 's'}} Found</span></h2> 
+		<h2 class="col-sm-7" ng-show="!objectives">Search Objectives</h2>
+		<h2 class="col-sm-7" ng-show="objectives && total_entries >= 0">{{total_entries==0 ? 'No' : ( total_entries | number ) }} Objective<span>{{total_entries == 1 ? '': 's'}} Found</span></h2> 
 
 			<div class="col-sm-1" style="vertical-align: bottom;">
 				<!--
@@ -256,8 +256,8 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 			</div>
 
 			<div class="col-sm-1" ng-show="total_num_pages != 0">
-				<label class="waldo-sm" style="white-space: nowrap;" for="filings_per_page">Objectives Per Page:</label>
-				<input type="text" id="filings_per_page" class="entries_per_page_spinner form-control input-sm" style="width: 6em;" size="5" ng-model="requested_entries_per_page" ng-keypress="requested_entries_per_page_press(requested_entries_per_page, $event)">
+				<label class="waldo-sm" style="white-space: nowrap;" for="thingees_per_page">Objectives Per Page:</label>
+				<input type="text" id="thingees_per_page" class="entries_per_page_spinner form-control input-sm" style="width: 6em;" size="5" ng-model="requested_entries_per_page" ng-keypress="requested_entries_per_page_press(requested_entries_per_page, $event)">
 			</div>
 
 		</div><!-- class="form-group" -->
@@ -268,11 +268,11 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 
 	<!--<div class="row">-->
 
-		<!--<div class="table-responsive col-sm-12" style="x-overflow: auto" ng-show="filings.length > 0">-->
+		<!--<div class="table-responsive col-sm-12" style="x-overflow: auto" ng-show="objectives.length > 0">-->
 
-		<!-- <div style="y-overflow: auto; x-overflow: auto;" ng-show="filings.length > 0"> -->
+		<!-- <div style="y-overflow: auto; x-overflow: auto;" ng-show="objectives.length > 0"> -->
 
-			<table id="stickyHeader" class="table table-striped table-hover table-bordered" ng-show="filings.length > 0">
+			<table id="stickyHeader" class="table table-striped table-hover table-bordered" ng-show="objectives.length > 0">
 				<thead>
 					<tr ng-cloak>
 						<th style="text-align: center;" ng-repeat = "column in columns" width="{{column.width}}">
@@ -291,13 +291,18 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-cloak ng-repeat="filing in filings">
-						<!-- <td ng-repeat = "column in columns">{{filing[column.name]}}</td> -->
-						<td><a ng-href="/scrummer/#/forms/{{filing.accession_number}}" title="View Filing Details">{{filing.accession_number}}</a><a ng-href="{{edgarFileNameToEdgarSecFilingPageUrl(filing.file_name)}}" title="View Filing at SEC" target="_blank"><img src="/scrummer/images/www.sec.gov-favicon.gif" style="padding-left: 10px;"></a></td>
-						<td>{{filing.form_type}}</td>
-						<td>{{filing.date_filed | date:'yyyy-MM-dd'}}</td>
-						<td>{{filing.dn_company_conformed_name}}</td>
-						<td>{{filing.dn_company_central_index_key}}</td>
+					<tr ng-cloak ng-repeat="objective in objectives">
+						<!-- <td ng-repeat = "column in columns">{{objective[column.name]}}</td> -->
+						<!--<td><a ng-href="/scrummer/#/forms/{{objective.accession_number}}" title="View Objective Details">{{objective.accession_number}}</a><a ng-href="{{edgarFileNameToEdgarSecFilingPageUrl(objective.file_name)}}" title="View Filing at SEC" target="_blank"><img src="/scrummer/images/www.sec.gov-favicon.gif" style="padding-left: 10px;"></a></td>-->
+						<td>{{objective.project}}</td>
+						<td>{{objective.task_name}}</td>
+						<td>{{objective.assigned_to}}</td>
+						<td>{{objective.duration}}</td>
+						<td>{{objective.percent_complete}}</td>
+						<td>{{objective.start| date:'yyyy-MM-dd'}}</td>
+						<td>{{objective.finish| date:'yyyy-MM-dd'}}</td>
+						<td>{{objective.status}}</td>
+						<td>{{objective.comments}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -309,8 +314,8 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 
 
   	<pre ng-cloak ng-show="debug_html">
-	filings = "{{filings | json }}"
-	<!-- <p ng-non-bindable>filings = {{filings}} </p> -->
+	objectives = "{{objectives | json }}"
+	<!-- <p ng-non-bindable>objectives = {{objectives}} </p> -->
 	</pre> 
 
   </div><!-- class='container' -->

@@ -1,0 +1,4 @@
+#mongoit.sh forms_view.js 2>&1 | tee m.out
+set -x
+./mongoit.sh display.js 2>&1 | tee m.out
+set +x

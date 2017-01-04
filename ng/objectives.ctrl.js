@@ -1,5 +1,5 @@
 angular.module('waldoApp')
-.controller('ObjectivesCtrl', function($scope, $interval, $window, $routeParams, ConfigSvc, FormsSvc, UtilsSvc, FormTypesSvc, SharedUtilsSvc ){
+.controller('ObjectivesCtrl', function($scope, $interval, $window, $routeParams, ConfigSvc, ObjectivesSvc, UtilsSvc, FormTypesSvc, SharedUtilsSvc ){
 
 	var sWho = "ObjectivesCtrl";
 
@@ -7,7 +7,7 @@ angular.module('waldoApp')
 
 	$scope.entities_id_filter = $routeParams.entities_id;
 
-	$scope.BASE_CSV_URL = "/api/forms?format=csv";
+	$scope.BASE_CSV_URL = SharedUtilsSvc.getUrlPrefix() + "/api/objectives?format=csv";
 
 	$scope.csv_url = $scope.BASE_CSV_URL;
 
@@ -65,11 +65,15 @@ angular.module('waldoApp')
 	};
 
 	$scope.columns = [
-			{"heading": "Accession Number", "name": "accession_number", "width": "20%"},
-			{"heading": "Form Type", "name": "form_type", "width": "15%"},
-			{"heading": "Date Filed", "name": "date_filed", "width": "15%" },
-			{"heading": "Company Name", "name": "dn_company_conformed_name", "width": "30%"},
-			{"heading": "Company CIK", "name": "dn_company_central_index_key", "width": "20%"}
+			{"heading": "Project", "name": "project", "width": "12%"},
+			{"heading": "Task", "name": "task_name", "width": "11%"},
+			{"heading": "Assigned To", "name": "assigned_to", "width": "11%" },
+			{"heading": "Duration", "name": "duration", "width": "11%"},
+			{"heading": "% Complete", "name": "percent_complete", "width": "11%"},
+			{"heading": "Start", "name": "start", "width": "11%"},
+			{"heading": "Finish", "name": "finish", "width": "11%"},
+			{"heading": "Status", "name": "status", "width": "11%"},
+			{"heading": "Comments", "name": "comments", "width": "11%"},
 	];
 
 	$scope.total_entries = 0;
@@ -199,53 +203,6 @@ angular.module('waldoApp')
 	});
 
 
-	// Used for automatic initial fetcheroo...
-	// ...maybe we can later re-factor the "filter", "sort", and "page"
-	// fetch logic into this one method...
-//	$scope.fetcheroo = function(){
-//
-//		var options = {"maxRows": 100, "withFilingsAttributesOnly": true };
-//
-//		// Don't forget your filtering options...add them to our options Object...
-//		if( ! $scope.massage_and_validate_search_filters( options ) ){
-//			console.log("WARNING: crummy filters on initial load.");
-//			//return;
-//		}
-//
-//		options.orderBy = $scope.current_sort_by;
-//		options.ascDesc = $scope.current_asc_desc;
-//
-//		$scope.start_progress_bar();
-//
-//	    FormsSvc.fetch( options )
-//		.success(function(filings){
-//
-//			console.log( sWho + "(): Got back filings...");
-//
-//			$scope.filings = filings;
-//
-//			$scope.stop_progress_bar();
-//
-//		});
-//
-//	}; /* fetcheroo() */
-
-//	$scope.synch_date_filed_filter_to_dt = function(){
-//
-//		if( $scope.date_filed_from_filter_dt && $scope.date_filed_from_filter_dt instanceof Date ){
-//			$scope.date_filed_from_filter = SharedUtilsSvc.formatDateObjectAsString($scope.date_filed_from_filter_dt);
-//		}
-//		else{
-//			$scope.date_filed_from_filter = "";
-//		}
-//
-//		if( $scope.date_filed_to_filter_dt && $scope.date_filed_to_filter_dt instanceof Date ){
-//			$scope.date_filed_to_filter = SharedUtilsSvc.formatDateObjectAsString($scope.date_filed_to_filter_dt);
-//		}
-//		else{
-//			$scope.date_filed_to_filter = "";
-//		}
-//	}
 
 	$scope.massage_and_validate_search_filters = function( filterOptions ){
 
@@ -519,7 +476,7 @@ angular.module('waldoApp')
    		$scope.start_progress_bar();
 
 		// Later on, adjust logic so we only re-fetch the count if the search filters have changed...
-		FormsSvc.fetch_count( options )
+		ObjectivesSvc.fetch_count( options )
 		.success(function(arrayOut){
 
 			console.log( sWho + "(): Got back arrayOut = ", arrayOut, "..." );
@@ -562,16 +519,16 @@ angular.module('waldoApp')
 			//options.rowOffset = rangeOutOptions.offsetOut;
 			//options.rowLimit = rangeOutOptions.limitOut;
 
-   			FormsSvc.fetch( options )
-			.success(function(filings){
+   			ObjectivesSvc.fetch( options )
+			.success(function(objectives){
 
-				console.log( sWho + "(): Got back filings...");
+				console.log( sWho + "(): Got back objectives...");
 
-				if( filings instanceof Array ){
-					console.log( sWho + "(): filings is an Array with filings.length = " + filings.length );
+				if( objectives instanceof Array ){
+					console.log( sWho + "(): objectives is an Array with filings.length = " + objectives.length );
 				}
 				else {
-					console.log( sWho + "(): WARN: filings is NOT an Array, we expected an Array...");
+					console.log( sWho + "(): WARN: objectives is NOT an Array, we expected an Array...");
 				}
 
 				$scope.filter_text_array = $scope.create_filter_text_array( options ); 
@@ -585,7 +542,7 @@ angular.module('waldoApp')
 				$scope.current_sort_by = $scope.pending_sort_by;
 				$scope.current_asc_desc = $scope.pending_asc_desc;
 
-				$scope.filings = filings;
+				$scope.objectives = objectives;
 
 				navStickyTableHeaderInit(); // in nav.js	
 

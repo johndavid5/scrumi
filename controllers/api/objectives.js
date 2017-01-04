@@ -13,7 +13,7 @@ var router = require('express').Router();
 
 router.get('/:accessionNumber?', function(req, res, next){
 
-	var sWho = "forms: router.get";
+	var sWho = "objectives: router.get";
 
 	console.log(sWho + '(): GET /api/objectives received...');
 
@@ -132,9 +132,9 @@ router.get('/:accessionNumber?', function(req, res, next){
 				return next(err);
 			}
 	
-			//console.log("Sending to client: jsonOutput = ", jsonOutput, "..." );
+			console.log("Sending to client: jsonOutput = ", jsonOutput, "..." );
 
-			console.log(sWho + "(): Sending jsonOutput to client...");
+			//console.log(sWho + "(): Sending jsonOutput to client...");
 	
 			res.header({
 				"Access-Control-Allow-Origin": "*"

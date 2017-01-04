@@ -52,7 +52,8 @@ function Objectives(){
 
 			//var query = {};
 			//var query = { "form_processing_attempts.success" : { "$eq": true } };
-			var query = { "dn_denormalized" : { "$eq": true }, "dn_company_conformed_name": { "$ne": "" } };
+			//var query = { "dn_denormalized" : { "$eq": true }, "dn_company_conformed_name": { "$ne": "" } };
+			var query = {};
 
 			if( options.accessionNumber ){
 				// For example the Form Details page...
@@ -233,19 +234,21 @@ function Objectives(){
 						return;
 					}
 
-					items = [{"qty":4, "item":"Calling Birds"},{"qty":3, "item": "French Hens"},{"qty":2, "item": "Turtle Doves"},{"qty":1, "item": "Partridge in a Pear Tree"}];
+					//items = [{"qty":4, "item":"Calling Birds"},{"qty":3, "item": "French Hens"},{"qty":2, "item": "Turtle Doves"},{"qty":1, "item": "Partridge in a Pear Tree"}];
 
 					logger.info(sWho + "(): items.length = " + items.length + "...");
 					if( items.length >= 1 ){
-						logger.info(sWho + "(): items[0] = " + items[0] + "...");
+						logger.info(sWho + "(): items[0] = ", items[0], "...");
 					}
-					//logger.info(sWho + "(): Returning items = ",  items, " to callback...");
-					logger.info(sWho + "(): Returning items to callback...");
+
+					logger.info(sWho + "(): Returning items = ",  items, " to callback...");
+					//logger.info(sWho + "(): Returning items to callback...");
 
 					callback( items, items.length, null );
 
 					logger.info(sWho + "(): Calling db.close() and returning from function...");
 					db.close();
+
 					return;
 				});
 
