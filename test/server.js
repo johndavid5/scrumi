@@ -29,6 +29,13 @@ describe("Objectives API", function(){
 					logger.debug(sWhat + ": error = \"" + error + "\"...");
 					logger.debug(sWhat + ": response.statusCode = \"" + response.statusCode + "\"...");
 					logger.debug(sWhat + ": body = \"" + body + "\"...");
+					logger.debug(sWhat + ": typeof body = \"" + (typeof body) + "\"...");
+					var objectives = JSON.parse( body );
+					logger.debug(sWhat + ": objectives = ", objectives, "...");
+					logger.debug(sWhat + ": objectives.length = \"" + objectives.length + "\"...");
+
+					expect(objectives.length).to.be.at.least(1);
+
 
 					expect(response.statusCode).to.equal(200);
 
