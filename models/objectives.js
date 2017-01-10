@@ -178,46 +178,80 @@ function Objectives(){
 
 				if( options.orderBy ){
 
-					if( options.orderBy == "date_filed" ){
+					if( options.orderBy == "project" ){
 						if( options.ascDesc == "desc" ){
-							sort = {"date_filed": -1 };
+							sort = {"project": -1 };
 						}
 						else {
-							sort = {"date_filed": 1 };
+							sort = {"project": 1 };
 						}
 					}
-					else if( options.orderBy == "accession_number" ){
+					else if( options.orderBy == "task_name" ){
 						if( options.ascDesc == "desc" ){
-							sort = {"accession_number": -1 };
+							sort = {"task_name": -1 };
 						}
 						else {
-							sort = {"accession_number": 1 };
+							sort = {"task_name": 1 };
 						}
 					}
-					else if( options.orderBy == "form_type" ){
+					else if( options.orderBy == "assigned_to" ){
 						if( options.ascDesc == "desc" ){
-							sort = {"form_type": -1 };
+							sort = {"assigned_to": -1 };
 						}
 						else {
-							sort = {"form_type": 1 };
+							sort = {"assigned_to": 1 };
 						}
 					}
-					else if( options.orderBy == "dn_company_conformed_name" ){
+					else if( options.orderBy == "duration" ){
 						if( options.ascDesc == "desc" ){
-							sort = {"dn_company_conformed_name": -1 };
+							sort = {"duration": -1 };
 						}
 						else {
-							sort = {"dn_company_conformed_name": 1 };
+							sort = {"duration": 1 };
 						}
 					}
-					else if( options.orderBy == "dn_company_central_index_key" ){
+
+					else if( options.orderBy == "percent_complete" ){
 						if( options.ascDesc == "desc" ){
-							sort = {"dn_company_central_index_key": -1 };
+							sort = {"percent_complete": -1 };
 						}
 						else {
-							sort = {"dn_company_central_index_key": 1 };
+							sort = {"percent_complete": 1 };
 						}
 					}
+					else if( options.orderBy == "start" ){
+						if( options.ascDesc == "desc" ){
+							sort = {"start": -1 };
+						}
+						else {
+							sort = {"start": 1 };
+						}
+					}
+					else if( options.orderBy == "finish" ){
+						if( options.ascDesc == "desc" ){
+							sort = {"finish": -1 };
+						}
+						else {
+							sort = {"finish": 1 };
+						}
+					}
+					else if( options.orderBy == "status" ){
+						if( options.ascDesc == "desc" ){
+							sort = {"status": -1 };
+						}
+						else {
+							sort = {"status": 1 };
+						}
+					}
+					else if( options.orderBy == "comments" ){
+						if( options.ascDesc == "desc" ){
+							sort = {"comments": -1 };
+						}
+						else {
+							sort = {"comments": 1 };
+						}
+					}
+
 
 				}/* if( options.orderBy ) */
 
