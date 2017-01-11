@@ -15,9 +15,8 @@ angular.module('waldoApp')
 
 		var sWho = "$scope.refresh_csv_url";
 
-		//$scope.csv_url = $scope.BASE_CSV_URL + "&entities_id_filter=" + $scope.entities_id_filter + "&accession_number_filter=" + $scope.accession_number_filter + "&form_type_filter=" + $scope.form_type_filter + "&date_filed_from_filter=" + $scope.date_filed_from_filter + "&date_filed_to_filter=" + $scope.date_filed_to_filter + "&orderBy=" + $scope.current_sort_by + "&ascDesc=" + $scope.current_asc_desc;
 		$scope.csv_url = $scope.BASE_CSV_URL 
-		+ "&accession_number_filter=" + $scope.accession_number_filter
+		+ "&project_filter=" + $scope.project_filter
 		+ "&form_type_filter=" + $scope.form_type_filter
 		+ "&date_filed_from_filter=" + $scope.date_filed_from_filter
 		+ "&date_filed_to_filter=" + $scope.date_filed_to_filter
@@ -104,7 +103,7 @@ angular.module('waldoApp')
 
 	$scope.current_mouse_on = "";
 
-	$scope.accession_number_filter = "";
+	$scope.project_filter = "";
 
 	$scope.form_type_filter = "";
 	$scope.form_type_filter_count = 0;
@@ -206,12 +205,12 @@ angular.module('waldoApp')
 
 	$scope.massage_and_validate_search_filters = function( filterOptions ){
 
-		$scope.accession_number_filter = UtilsSvc.isNull(  $scope.accession_number_filter, "" );
+		$scope.project_filter = UtilsSvc.isNull(  $scope.project_filter, "" );
 
 		$scope.form_type_filter = UtilsSvc.isNull(  $scope.form_type_filter, "" );
 		$scope.form_type_filter = $scope.form_type_filter.toUpperCase();
 
-		filterOptions.accession_number_filter = $scope.accession_number_filter;
+		filterOptions.project_filter = $scope.project_filter;
 		filterOptions.form_type_filter = $scope.form_type_filter;
 
 		var outOptions = {};
@@ -561,8 +560,8 @@ angular.module('waldoApp')
 
 		console.log( sWho + "(): options = ", options );
 
-		if( options.accession_number_filter ){
-			aOutput.push("Accession Number:\"*" + options.accession_number_filter + "*\""); 	
+		if( options.project_filter ){
+			aOutput.push("Project:\"*" + options.project_filter + "*\""); 	
 		}
 
 		if( options.form_type_filter ){

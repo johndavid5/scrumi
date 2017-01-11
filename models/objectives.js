@@ -60,11 +60,11 @@ function Objectives(){
 				query.accession_number = { "$eq": options.accessionNumber };
 			}
 
-			if( options.accession_number_filter ){
+			if( options.project_filter ){
 				// MongoDB 2.4: You can also use text index...
 				// see http://stackoverflow.com/questions/10610131/checking-if-a-field-contains-a-string
 				// e.g., { <field>: { $regex: /pattern/, $options: '<options>' } }
-				query.accession_number = { "$regex": new RegExp('.*' + options.accession_number_filter + '.*', 'i') };
+				query.project = { "$regex": new RegExp('.*' + options.project_filter + '.*', 'i') };
 			}
 
 			if( options.form_type_filter ){
