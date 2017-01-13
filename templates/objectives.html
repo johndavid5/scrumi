@@ -16,23 +16,17 @@
 		<div class="form-group">
 
 			<div class="col-sm-2">
-				<label class="waldo-sm" style="text-align: right;" for="accession_number_filter">Project:</label>
+				<label class="waldo-sm" style="text-align: right;" for="project_filter">Project:</label>
 				<span>
 					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="project_filter" name="project_filter" ng-model="project_filter" placeholder="">
 				</span>
 			</div>
 
 			<div class="col-sm-2">
-				<label class="waldo-sm"  style="text-align: right;" for="form_type">Form&nbsp;Types:<span ng-cloak ng-show="form_type_filter_count>0" style="margin-left: 4px; font-size: 85%; font-weight: normal; background-color: rgb(92,184,92);" class="badge">{{form_type_filter_count}}</span></label>
-					<div>
-						<vf-list-picker picker-title="'Choose Form Types'" un-selected-list="form_types_un_selected" selected-list="form_types_selected" form-field-model="form_type_filter" offset-x="'14px'" offset-y="'56px'" picker-width="'425px'" picker-height="'350px'" left-select-width="'7em'" right-select-width="'7em'" ng-show="form_type_picker_opened" is-open="form_type_picker_opened" debug-html="debug_html"></vf-list-picker>
-						<div class="input-group">
-							<input type="text" class="form-control input-sm" id="form_type_filter" name="form_type_filter" style="font-weight: bold;" ng-click="open_close_form_type_picker($event)" ng-model="form_type_filter"  ng-blur="close_form_type_picker($event)"> 
-							<span class="input-group-btn">
-								<button type="button" class="btn btn-default btn-sm" ng-click="open_close_form_type_picker($event)"><i class="glyphicon glyphicon-duplicate"></i></button>
-							</span>
-						</div>
-					</div>
+				<label class="waldo-sm" style="text-align: right;" for="task_filter">Task:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="task_filter" name="task_filter" ng-model="task_filter" placeholder="">
+				</span>
 			</div>
 
 

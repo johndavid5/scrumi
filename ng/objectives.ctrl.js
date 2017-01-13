@@ -17,7 +17,7 @@ angular.module('waldoApp')
 
 		$scope.csv_url = $scope.BASE_CSV_URL 
 		+ "&project_filter=" + $scope.project_filter
-		+ "&form_type_filter=" + $scope.form_type_filter
+		+ "&task_filter=" + $scope.task_filter
 		+ "&date_filed_from_filter=" + $scope.date_filed_from_filter
 		+ "&date_filed_to_filter=" + $scope.date_filed_to_filter
 		+ "&filer_name_filter=" + $scope.filer_name_filter
@@ -105,8 +105,7 @@ angular.module('waldoApp')
 
 	$scope.project_filter = "";
 
-	$scope.form_type_filter = "";
-	$scope.form_type_filter_count = 0;
+	$scope.task_filter = "";
 
 	$scope.filer_name_filter = "";
 	$scope.filer_cik_filter = "";
@@ -207,11 +206,10 @@ angular.module('waldoApp')
 
 		$scope.project_filter = UtilsSvc.isNull(  $scope.project_filter, "" );
 
-		$scope.form_type_filter = UtilsSvc.isNull(  $scope.form_type_filter, "" );
-		$scope.form_type_filter = $scope.form_type_filter.toUpperCase();
+		$scope.task_filter = UtilsSvc.isNull(  $scope.task_filter, "" );
 
 		filterOptions.project_filter = $scope.project_filter;
-		filterOptions.form_type_filter = $scope.form_type_filter;
+		filterOptions.task_filter = $scope.task_filter;
 
 		var outOptions = {};
 
@@ -453,8 +451,6 @@ angular.module('waldoApp')
 			$event.stopPropagation();
 		}
 
-		$scope.form_type_picker_opened = false;
-
 		//var options = {"maxRows": 100, "withFilingsAttributesOnly": true };
 		var options = {};
 
@@ -564,8 +560,8 @@ angular.module('waldoApp')
 			aOutput.push("Project:\"*" + options.project_filter + "*\""); 	
 		}
 
-		if( options.form_type_filter ){
-			aOutput.push("Form Types: \"" + options.form_type_filter + "\""); 	
+		if( options.task_filter ){
+			aOutput.push("Task: \"" + options.task_filter + "\""); 	
 		}
 
 		if( options.date_filed_from_filter ){
@@ -736,160 +732,6 @@ angular.module('waldoApp')
 
 	$scope.date_format = 'yyyy-MM-dd';
 
-	// <Form_Types_Shtuff>
-	$scope.form_type_picker_opened = false;
-
-	$scope.form_types_un_selected =  []; // use for picker, fill-in later via FormTypes service...
-
-//	$scope.form_types_un_selected =  [
-//		"S-1/A",
-//		"424B2",
-//		"F-X",
-//		"EFFECT",
-//	];
-
-//	$scope.form_types_un_selected =  [
-//		"S-1/A",
-//		"424B2",
-//		"F-X",
-//		"EFFECT",
-//		"F-N/A"  ,
-//		"10-Q"  ,
-//		"X-17A-5"  ,
-//		"F-N"  ,
-//		"40-17G"  ,
-//		"10-K"  ,
-//		"20-F"  ,
-//		"8-K"  ,
-//		"10-Q/A"  ,
-//		"DEF 14A"  ,
-//		"424B5"  ,
-//		"DEFA14A"  ,
-//		"N-30B-2"  ,
-//		"F-3/A"  ,
-//		"S-4"  ,
-//		"SC 13D/A"  ,
-//		"FWP"  ,
-//		"20-F/A"  ,
-//		"D"  ,
-//		"424B3"  ,
-//		"F-4/A"  ,
-//		"F-3"  ,
-//		"497J"  ,
-//		"6-K"  ,
-//		"10-D"  ,
-//		"485BPOS"  ,
-//		"497"  ,
-//		"10-K/A"  ,
-//		"4"  
-//	]; 
-
-//	$scope.form_types_un_selected.sort();
-
-	$scope.form_types_selected =  [];
-
-	/**
-	* POSTCONDITION:
-	* Elements found in $scope.form_type_filter will also be found in $scope.form_types_selected.
-	* Elements NOT found in $scope.form_type_filter will also NOT be found in $scope.
-	*
-	* options.toTheLast: by default, ignore the LAST entry, since it may be a partially typed
-	* in form...
-	*/
-	$scope.synch_selected_lists_with_form_type_filter = function(options){
-
-		var sWho = "synch_selected_lists_with_form_type_filter";
-
-		console.log(sWho + "(): options = ", options, "...");
-
-		var bToTheLast = false;
-		if(options && options.toTheLast ){
-			bToTheLast = true;
-		}
-
-		console.log(sWho + "(): bToTheLast = ", bToTheLast, "..." );
-		
-
-		$scope.form_type_filter = $scope.form_type_filter.toUpperCase();
-		var a_form_type_filter = $scope.form_type_filter.split(",");	
-
-		console.log(sWho + "(): GEORGE TAKEI: Oh, my...a_form_type_filter.length = " + a_form_type_filter.length + "...");
-
-		var i_max = a_form_type_filter.length-1;
-
-		if( bToTheLast ){
-			i_max = a_form_type_filter.length;
-		}
-
-		for( var i=0; i < i_max; i++ ){
-
-			a_form_type_filter[i] = a_form_type_filter[i].trim();
-
-			console.log(sWho + "(): a_form_type_filter[" + i + "] = \"" + a_form_type_filter[i] + "\"...");
-
-			if( a_form_type_filter[i].length == 0 ){
-				// Ignore if it's a blankee...
-				continue;
-			}
-
-			var i_where;
-
-			if( ( i_where = $scope.form_types_un_selected.indexOf( a_form_type_filter[i] ) ) >= 0 ){
-				console.log(sWho + "(): Found it at element " + i_where + " of $scope.form_types_un_selected, so removing from that location...");
-				$scope.form_types_un_selected.splice(i_where, 1); // Remove from un-selected if found...
-			}
-
-			if( ( i_where = $scope.form_types_selected.indexOf( a_form_type_filter[i] ) ) < 0 ){
-				console.log(sWho + "(): Did NOT find it in $scope.form_types_selected, so pushing it onto...");
-				$scope.form_types_selected.push( a_form_type_filter[i] );
-			}
-		}
-
-		$scope.form_types_un_selected.sort();
-	}; /* $scope.synch_selected_lists_with_form_type_filter() */
-
-	$scope.close_form_type_picker = function($event) {
-
-		var sWho = "$scope.close_form_type_picker";
-
-		console.log(sWho + "(): $scope.form_type_picker_opened = '" + $scope.form_type_picker_opened + "'...");
-		console.log(sWho + "(): $event = ", event );
-
-		//$event.preventDefault();
-		//$event.stopPropagation();
-
-		//$scope.form_type_picker_opened = false;
-
-	}; /* $scope.close_form_type_picker() */
-
-	$scope.open_close_form_type_picker = function($event) {
-
-		var sWho = "$scope.open_close_form_type_picker";
-
-		console.log(sWho + "(): $scope.form_type_picker_opened = '" + $scope.form_type_picker_opened + "'...");
-
-		$event.preventDefault();
-		$event.stopPropagation();
-
-		if( ! $scope.form_type_picker_opened ){
-			// If we're opening it now, let's synchronize the lists...
-			console.log(sWho + "(): Oh, my....calling $scope.synch_selected_lists_with_form_type_filter()...");
-			$scope.synch_selected_lists_with_form_type_filter({"toTheLast": true});
-		}
-
-		$scope.form_type_picker_opened = ! $scope.form_type_picker_opened;
-
-	}; /* $scope.open_close_form_type_picker() */
-
-	/** GEORGE TAKEI: Oh, my....we'd better keep an eye or two on the form_type_filter...
-	*/
-	$scope.$watch( 'form_type_filter',
-		function(value){
-			console.log("GEORGE TAKEI: Oh, my..., form_type_filter has changed, the NEW value is \"" + value + "\"...");
-			$scope.update_form_type_filter_count();
-			$scope.synch_selected_lists_with_form_type_filter();
-		}
-	);
 
 //	$scope.$watch( 'date_filed_from_filter_dt',
 //		function(value){
@@ -905,44 +747,6 @@ angular.module('waldoApp')
 //		}
 //	);
 
-	$scope.update_form_type_filter_count = function() {
-
-		sWho = "update_form_type_filter_count";
-
-		//console.log(sWho + "(): $scope.form_type_filter = \"" + $scope.form_type_filter + "\"...");
-		$scope.form_type_filter = $scope.form_type_filter.toUpperCase();
-		var a_splitted = $scope.form_type_filter.split(","); 
-
-		//console.log(sWho + "(): BEFORE PROCESSING: a_splitted = ", a_splitted );
-		//console.log(sWho + "(): BEFORE PROCESSING: a_splitted.length = ", a_splitted.length );
-
-		for( var i = a_splitted.length-1; i >= 0; i-- ){
-			if( a_splitted[i].trim().length == 0 ){
-				a_splitted.splice(i, 1); // Remove blankee element...
-			}
-		}
-
-		//console.log(sWho + "(): AFTER PROCESSING: a_splitted = ", a_splitted );
-		//console.log(sWho + "(): AFTER PROCESSING: a_splitted.length = ", a_splitted.length );
-
-		$scope.form_type_filter_count = a_splitted.length;
-	};
-
-	// </Form_Types_Shtuff>
-
-	FormTypesSvc.fetch()
-	.success(function(formTypes){
-		console.log("Got back formTypes = ", formTypes );
-		if( formTypes instanceof Array ){
-
-			$scope.form_types_un_selected =  [];
-			var i;
-			for(i=0; i < formTypes.length; i++ ){ 	
-				//$scope.form_types_un_selected.push( formTypes[i].form_type_varchar ); 
-				$scope.form_types_un_selected.push( formTypes[i] );
-			}
-			$scope.form_types_un_selected.sort();
-		}
 
 		if( ConfigSvc.AUTO_SEARCH ){
 			// Perform an initial automatic fetcheroo...or maybe 
@@ -950,8 +754,6 @@ angular.module('waldoApp')
 			// something...?
 			$scope.search();
 		}
-
-	});
 
 
 });

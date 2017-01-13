@@ -67,25 +67,12 @@ function Objectives(){
 				query.project = { "$regex": new RegExp('.*' + options.project_filter + '.*', 'i') };
 			}
 
-			if( options.form_type_filter ){
-
-				logger.info(sWho + "(): SHEMP: Moe, found options.form_type_filter = ", options.form_type_filter , "...");
-
-				var a_form_type_filters =[];
-
-				if( options.form_type_filter instanceof Array ){
-					a_form_type_filters = deepcopy( options.form_type_filter );	
-					logger.info(sWho + "(): SHEMP: options.form_type_filter is an Array, setting a_form_type_filters to a deepcopy of it, Moe...");
-				}
-				else{
-					a_form_type_filters = jutils.csvSplit( options.form_type_filter );	
-					logger.info(sWho + "(): SHEMP: options.form_type_filter is not an Array, setting a_form_type_filters to output of csvSplit on it, Moe...");
-				}
-
-				// e.g., { qty: { $in: [ 5, 15 ] } }
-				query.form_type = { "$in": a_form_type_filters };
-
-			}/* if( options.form_type_filter ) */
+			if( options.task_filter ){
+				// MongoDB 2.4: You can also use text index...
+				// see http://stackoverflow.com/questions/10610131/checking-if-a-field-contains-a-string
+				// e.g., { <field>: { $regex: /pattern/, $options: '<options>' } }
+				query.task_name = { "$regex": new RegExp('.*' + options.task_filter + '.*', 'i') };
+			}
 
 			if( options.date_filed_from_filter && sharedUtils.isDateStringValid(options.date_filed_from_filter) ){
 				query.date_filed = { "$gte": options.date_filed_from_filter }; 
