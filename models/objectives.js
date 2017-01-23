@@ -36,7 +36,8 @@ function Objectives(){
 
 		logger.info(sWho + "(): Connecting to \"" + config.mongoDbScrummerUrl + "\"...");
 
-		MongoClient.connect(config.mongoDbScrummerUrl, function(err, db) {
+		MongoClient.connect(config.mongoDbScrummerUrl, function connectCallback(err, db) {
+			var sWho = "connectCallback";
 
 			if( err ){
 				logger.error(sWho + "(): Trouble with connect: \"" + err + "\"...");
@@ -74,18 +75,18 @@ function Objectives(){
 				query.task_name = { "$regex": new RegExp('.*' + options.task_filter + '.*', 'i') };
 			}
 
-			if( options.date_filed_from_filter && sharedUtils.isDateStringValid(options.date_filed_from_filter) ){
-				query.date_filed = { "$gte": options.date_filed_from_filter }; 
+			if( options.start_date_from_filter && sharedUtils.isDateStringValid(options.start_date_from_filter) ){
+				query.start = { "$gte": options.start_date_from_filter }; 
 			}
 
-			if( options.date_filed_to_filter && sharedUtils.isDateStringValid(options.date_filed_to_filter) ){
-				if( query.date_filed ){
-					// query.date_filed object already exists, so set "$lte" field...
-					query.date_filed["$lte"] = options.date_filed_to_filter; 
+			if( options.start_date_to_filter && sharedUtils.isDateStringValid(options.start_date_to_filter) ){
+				if( query.start ){
+					// query.start object already exists, so set "$lte" field...
+					query.start["$lte"] = options.start_date_to_filter; 
 				}
 				else {
-					// query.date_filed object does not already exist, so create it...
-					query.date_filed = { "$lte": options.date_filed_to_filter }; 
+					// query.start object does not already exist, so create it...
+					query.start = { "$lte": options.start_date_to_filter }; 
 				}
 			}
 
@@ -105,7 +106,9 @@ function Objectives(){
 
 				logger.info(sWho + "(): Calling collection.count()...");
 
-  				collection.count(query, function(err, count){
+  				collection.count(query, function countCallback(err, count){
+
+					var sWho = "countCallback";
 
 					if( err ){
 						logger.error(sWho + "(): Trouble with count: \"" + err + "\"...");
@@ -244,7 +247,9 @@ function Objectives(){
 
 				console.log(sWho + "(): Calling collection.find(), query = ", query, "sort = ", sort, "skip=" + iSkip + ", limit=" + iLimit + "...");
 
-  				collection.find(query).sort(sort).skip(iSkip).limit(iLimit).toArray(function(err, items) {
+  				collection.find(query).sort(sort).skip(iSkip).limit(iLimit).toArray(function findCallback(err, items) {
+
+					var sWho = "findCallback";
 
 					if( err ){
 						logger.error(sWho + "(): Trouble with count: \"" + err + "\"...");
@@ -275,9 +280,10 @@ function Objectives(){
 
 			}/* else */
 
-		});/* MongoClient.connect(config.mongoDbUrl, function(err, db) */
+		});/* MongoClient.connect(config.mongoDbUrl, function connectCallback(err, db) */
 
 	}; /* getObjectives() */
+
 
 	this.getFormTypes = function( options, callback ){
 

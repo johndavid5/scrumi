@@ -24,6 +24,8 @@ router.get('/:accessionNumber?', function(req, res, next){
 
 	console.log(sWho + "(): req.params.accessionNumber = ", req.params.accessionNumber, "..."); 
 
+	console.log(sWho + "(): req.auth = ", req.auth);
+
 	console.log(sWho + "(): BEFORE: req.query = ", req.query );
 
 	if( typeof req.params.accessionNumber != "undefined" ){

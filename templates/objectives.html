@@ -32,33 +32,33 @@
 
 
 			<div class="col-sm-2">
-				<label class="waldo-sm" style="text-align: right;" for="date_filed_from_filter">Date&nbsp;Filed&nbsp;From:</label>
+				<label class="waldo-sm" style="text-align: right;" for="start_date_from_filter">Start&nbsp;Date&nbsp;From:</label>
 				<p class="input-group" ng-show="foolishly_attempt_to_use_angular_date_picker">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="date_filed_from_filter_dt" is-open="date_filter_from_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
+					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="start_date_from_filter_dt" is-open="date_filter_from_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default btn-sm" ng-click="open_close_date_picker($event,'from')"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</p>
 				<p class="input-group">
-					<input type="text" class="form-control input-sm datepicker" name="date_filed_from_filter" id="date_filed_from_filter" ng-model="date_filed_from_filter"/>
+					<input type="text" class="form-control input-sm datepicker" name="start_date_from_filter" id="start_date_from_filter" ng-model="start_date_from_filter"/>
 					<span class="input-group-btn">
-						<button type="button" class="btn btn-default btn-sm" id="date_filed_from_filter_button"><i class="glyphicon glyphicon-calendar"></i></button>
+						<button type="button" class="btn btn-default btn-sm" id="start_date_from_filter_button"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</p>
 			</div>
 
 			<div class="col-sm-2">
-				<label class="waldo-sm"  style="text-align: right;" for="date_filed_to_filter">Date&nbsp;Filed&nbsp;To:</label>
+				<label class="waldo-sm"  style="text-align: right;" for="start_date_to_filter">Start&nbsp;Date&nbsp;To:</label>
 				<p class="input-group" ng-show="foolishly_attempt_to_use_angular_date_picker">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="date_filed_to_filter_dt" is-open="date_filter_to_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
+					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="start_date_to_filter_dt" is-open="date_filter_to_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default btn-sm" ng-click="open_close_date_picker($event,'to')"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</p>
 				<p class="input-group">
-					<input type="text" class="form-control input-sm datepicker" name="date_filed_to_filter" id="date_filed_to_filter" ng-model="date_filed_to_filter"/>
+					<input type="text" class="form-control input-sm datepicker" name="start_date_to_filter" id="start_date_to_filter" ng-model="start_date_to_filter"/>
 					<span class="input-group-btn">
-						<button type="button" class="btn btn-default btn-sm" id="date_filed_to_filter_button"><i class="glyphicon glyphicon-calendar"></i></button>
+						<button type="button" class="btn btn-default btn-sm" id="start_date_to_filter_button"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</p>
 			</div>
@@ -111,23 +111,23 @@ accession_number_filter = "{{accession_number_filter}}"
 form_type_filter = "{{form_type_filter}}"
 form_type_filter_count = "{{form_type_filter_count}}"
 
-date_filed_from_filter = "{{date_filed_from_filter}}" 
-date_filed_to_filter = "{{date_filed_to_filter }}" 
+start_date_from_filter = "{{start_date_from_filter}}" 
+start_date_to_filter = "{{start_date_to_filter }}" 
 
-date_filed_from_filter_dt = "{{date_filed_from_filter_dt}}" 
-date_filed_to_filter_dt = "{{date_filed_to_filter_dt }}" 
+start_date_from_filter_dt = "{{start_date_from_filter_dt}}" 
+start_date_to_filter_dt = "{{start_date_to_filter_dt }}" 
 
 <!--
-typeof date_filed_from_filter_dt = "{{typeof date_filed_from_filter_dt}}" 
-typeof date_filed_to_filter_dt = "{{typeof date_filed_to_filter_dt}}" 
+typeof start_date_from_filter_dt = "{{typeof start_date_from_filter_dt}}" 
+typeof start_date_to_filter_dt = "{{typeof start_date_to_filter_dt}}" 
 
-date_filed_from_filter_dt.getTime() = "{{date_filed_from_filter_dt instanceof Date ? date_filed_from_filter_dt.getTime() | number : 'N/A'}}" 
-date_filed_to_filter_dt.getTime() = "{{date_filed_to_filter_dt instanceof Date ? date_filed_to_filter_dt.getTime() | number : 'N/A'}}" 
+start_date_from_filter_dt.getTime() = "{{start_date_from_filter_dt instanceof Date ? start_date_from_filter_dt.getTime() | number : 'N/A'}}" 
+start_date_to_filter_dt.getTime() = "{{start_date_to_filter_dt instanceof Date ? start_date_to_filter_dt.getTime() | number : 'N/A'}}" 
 -->
 
-date_filed_from_filter_dt.getTime() = "{{date_filed_from_filter_dt.getTime() | number}}" 
-date_filed_to_filter_dt.getTime() = "{{date_filed_to_filter_dt.getTime() | number}}" 
-date_filed_to_filter_dt.getTime() - date_filed_from_filter_dt.getTime() = "{{ (date_filed_to_filter_dt.getTime() - date_filed_from_filter_dt.getTime()) | number }}"
+start_date_from_filter_dt.getTime() = "{{start_date_from_filter_dt.getTime() | number}}" 
+start_date_to_filter_dt.getTime() = "{{start_date_to_filter_dt.getTime() | number}}" 
+start_date_to_filter_dt.getTime() - start_date_from_filter_dt.getTime() = "{{ (start_date_to_filter_dt.getTime() - start_date_from_filter_dt.getTime()) | number }}"
 
 
 filter_text = "{{filter_text}}"
@@ -321,48 +321,48 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 	$( ".datepicker" ).datepicker();
 	$( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" ); // ISO 8601 date format, e.g., "2014-04-28"
 
-	$( "#date_filed_from_filter_button" ).click( function($this){
+	$( "#start_date_from_filter_button" ).click( function($this){
 
 		//console.log( "click: $this = ", $this, "...");
 
-		if( $("#date_filed_from_filter").datepicker( "widget" ).is(":visible") ){
-			$("#date_filed_from_filter").datepicker("hide");
+		if( $("#start_date_from_filter").datepicker( "widget" ).is(":visible") ){
+			$("#start_date_from_filter").datepicker("hide");
 		}
 		else {
-			$("#date_filed_from_filter").datepicker("show");
+			$("#start_date_from_filter").datepicker("show");
 		}
 
 	});
 
 	/*
-	$( "#date_filed_from_filter" ).blur( function($this){
+	$( "#start_date_from_filter" ).blur( function($this){
 
 		//console.log( "blur: $this = ", $this, "...");
 
-		$("#date_filed_from_filter").datepicker("hide");
+		$("#start_date_from_filter").datepicker("hide");
 
 	});
 	*/
 
-	$( "#date_filed_to_filter_button" ).click( function($this){
+	$( "#start_date_to_filter_button" ).click( function($this){
 
 		//console.log( "click: $this = ", $this, "...");
 
-		if( $("#date_filed_to_filter").datepicker( "widget" ).is(":visible") ){
-			$("#date_filed_to_filter").datepicker("hide");
+		if( $("#start_date_to_filter").datepicker( "widget" ).is(":visible") ){
+			$("#start_date_to_filter").datepicker("hide");
 		}
 		else {
-			$("#date_filed_to_filter").datepicker("show");
+			$("#start_date_to_filter").datepicker("show");
 		}
 
 	});
 
 	/*
-	$( "#date_filed_to_filter" ).blur( function($this){
+	$( "#start_date_to_filter" ).blur( function($this){
 
 		//console.log( "blur: $this = ", $this, "...");
 
-		$("#date_filed_to_filter").datepicker("hide");
+		$("#start_date_to_filter").datepicker("hide");
 
 	});
 	*/

@@ -18,8 +18,8 @@ angular.module('waldoApp')
 		$scope.csv_url = $scope.BASE_CSV_URL 
 		+ "&project_filter=" + $scope.project_filter
 		+ "&task_filter=" + $scope.task_filter
-		+ "&date_filed_from_filter=" + $scope.date_filed_from_filter
-		+ "&date_filed_to_filter=" + $scope.date_filed_to_filter
+		+ "&start_date_from_filter=" + $scope.start_date_from_filter
+		+ "&start_date_to_filter=" + $scope.start_date_to_filter
 		+ "&filer_name_filter=" + $scope.filer_name_filter
 		+ "&filer_cik_filter=" + $scope.filer_cik_filter
 		+ "&orderBy=" + $scope.current_sort_by 
@@ -42,9 +42,9 @@ angular.module('waldoApp')
 
 	$scope.ARROW_TRANSPARENT_BTN_IMG_SRC = ConfigSvc.ARROW_TRANSPARENT_BTN_IMG_SRC;
 			
-	$scope.date_filed_from_filter = "";
-	//$scope.date_filed_from_filter = SharedUtilsSvc.firstDayOfThisMonthAsString();
-	//$scope.date_filed_from_filter = "2015-07-01"; // Hard code to July 1st, 2015 for now...perhaps use a more sophisticated algorithm later...
+	$scope.start_date_from_filter = "";
+	//$scope.start_date_from_filter = SharedUtilsSvc.firstDayOfThisMonthAsString();
+	//$scope.start_date_from_filter = "2015-07-01"; // Hard code to July 1st, 2015 for now...perhaps use a more sophisticated algorithm later...
 	$scope.edgarFileNameToEdgarSecFilingPageUrl = SharedUtilsSvc.edgarFileNameToEdgarSecFilingPageUrl;
 
 	$scope.on_mouse_enter_csv_btn = function(){
@@ -214,24 +214,24 @@ angular.module('waldoApp')
 		var outOptions = {};
 
 		if( $scope.foolishly_attempt_to_use_angular_date_picker ){
-			$scope.date_filed_from_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.date_filed_from_filter_dt );
+			$scope.start_date_from_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.start_date_from_filter_dt );
 		}
 		else {
-			//$scope.date_filed_from_filter = UtilsSvc.isNull(  $scope.date_filed_from_filter, "" );
+			//$scope.start_date_from_filter = UtilsSvc.isNull(  $scope.start_date_from_filter, "" );
 
-			if( ! $scope.date_filed_from_filter ){
-				$scope.date_filed_from_filter = "";
+			if( ! $scope.start_date_from_filter ){
+				$scope.start_date_from_filter = "";
 			}
-			$scope.date_filed_from_filter = $scope.date_filed_from_filter.trim();
+			$scope.start_date_from_filter = $scope.start_date_from_filter.trim();
 
-			if( $scope.date_filed_from_filter.length != 0 ){
+			if( $scope.start_date_from_filter.length != 0 ){
 		
-				if( ! SharedUtilsSvc.isDateStringValid( $scope.date_filed_from_filter, outOptions ) ){
-					$window.alert("Date Filed From = '" + $scope.date_filed_from_filter + "' is not a valid date.");
+				if( ! SharedUtilsSvc.isDateStringValid( $scope.start_date_from_filter, outOptions ) ){
+					$window.alert("Date Filed From = '" + $scope.start_date_from_filter + "' is not a valid date.");
 					return false;
 				}
-				$scope.date_filed_from_filter = outOptions.formattedDateStringOut;
-				$scope.date_filed_from_filter_dt = outOptions.dateObjectOut;
+				$scope.start_date_from_filter = outOptions.formattedDateStringOut;
+				$scope.start_date_from_filter_dt = outOptions.dateObjectOut;
 			}
 		}
 		
@@ -239,57 +239,57 @@ angular.module('waldoApp')
 		/***********************************************************************/
 
 		if( $scope.foolishly_attempt_to_use_angular_date_picker ){
-			$scope.date_filed_to_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.date_filed_to_filter_dt );
+			$scope.start_date_to_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.start_date_to_filter_dt );
 		}
 		else {
-			//$scope.date_filed_to_filter = UtilsSvc.isNull(  $scope.date_filed_to_filter, "" );
+			//$scope.start_date_to_filter = UtilsSvc.isNull(  $scope.start_date_to_filter, "" );
 		
-			if( ! $scope.date_filed_to_filter ){
-				$scope.date_filed_to_filter = "";
+			if( ! $scope.start_date_to_filter ){
+				$scope.start_date_to_filter = "";
 			}
-			$scope.date_filed_to_filter = $scope.date_filed_to_filter.trim();
+			$scope.start_date_to_filter = $scope.start_date_to_filter.trim();
 	
-			if( $scope.date_filed_to_filter.length != 0 ){
-				if( ! SharedUtilsSvc.isDateStringValid( $scope.date_filed_to_filter, outOptions ) ){
-					$window.alert("Date Filed To = '" + $scope.date_filed_to_filter + "' is not a valid date.");
+			if( $scope.start_date_to_filter.length != 0 ){
+				if( ! SharedUtilsSvc.isDateStringValid( $scope.start_date_to_filter, outOptions ) ){
+					$window.alert("Date Filed To = '" + $scope.start_date_to_filter + "' is not a valid date.");
 					return false;
 				}
-				$scope.date_filed_to_filter = outOptions.formattedDateStringOut;
-				$scope.date_filed_to_filter_dt = outOptions.dateObjectOut;
+				$scope.start_date_to_filter = outOptions.formattedDateStringOut;
+				$scope.start_date_to_filter_dt = outOptions.dateObjectOut;
 			}
 		}
 
-		console.log( sWho + "(): SHEMP: Before, Moe: $scope.date_filed_from_filter_dt = ", $scope.date_filed_from_filter_dt );
-		console.log( sWho + "(): SHEMP: Before, Moe: $scope.date_filed_to_filter_dt = ", $scope.date_filed_to_filter_dt );
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_from_filter_dt = ", $scope.start_date_from_filter_dt );
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_to_filter_dt = ", $scope.start_date_to_filter_dt );
 
-		console.log( sWho + "(): SHEMP: Before, Moe: $scope.date_filed_from_filter = ", $scope.date_filed_from_filter );
-		console.log( sWho + "(): SHEMP: Before, Moe: $scope.date_filed_to_filter = ", $scope.date_filed_to_filter );
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_from_filter = ", $scope.start_date_from_filter );
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_to_filter = ", $scope.start_date_to_filter );
 
-		if( $scope.date_filed_from_filter_dt instanceof Date 
-			&& $scope.date_filed_to_filter_dt instanceof Date 
-			&& $scope.date_filed_from_filter_dt.getTime() >  $scope.date_filed_to_filter_dt.getTime() )
+		if( $scope.start_date_from_filter_dt instanceof Date 
+			&& $scope.start_date_to_filter_dt instanceof Date 
+			&& $scope.start_date_from_filter_dt.getTime() >  $scope.start_date_to_filter_dt.getTime() )
 		{
-			console.log( sWho + "(): SHEMP: Sorry, Moe, looks like date_filed_from_filter_dt is greater than date_filed_to_filter_dt, I'm gonna have to swap 'em, Moe...");
+			console.log( sWho + "(): SHEMP: Sorry, Moe, looks like start_date_from_filter_dt is greater than start_date_to_filter_dt, I'm gonna have to swap 'em, Moe...");
 
 			var le_swapperou;
 
-			le_swapperou = $scope.date_filed_to_filter_dt;
-			$scope.date_filed_to_filter_dt = $scope.date_filed_from_filter_dt;
-			$scope.date_filed_from_filter_dt = le_swapperou;
+			le_swapperou = $scope.start_date_to_filter_dt;
+			$scope.start_date_to_filter_dt = $scope.start_date_from_filter_dt;
+			$scope.start_date_from_filter_dt = le_swapperou;
 
-			le_swapperou = $scope.date_filed_to_filter;
-			$scope.date_filed_to_filter = $scope.date_filed_from_filter;
-			$scope.date_filed_from_filter = le_swapperou;
+			le_swapperou = $scope.start_date_to_filter;
+			$scope.start_date_to_filter = $scope.start_date_from_filter;
+			$scope.start_date_from_filter = le_swapperou;
 		}
 
-		console.log( sWho + "(): SHEMP: After, Moe: $scope.date_filed_from_filter_dt = ", $scope.date_filed_from_filter_dt );
-		console.log( sWho + "(): SHEMP: After, Moe: $scope.date_filed_to_filter_dt = ", $scope.date_filed_to_filter_dt );
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_from_filter_dt = ", $scope.start_date_from_filter_dt );
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_to_filter_dt = ", $scope.start_date_to_filter_dt );
 
-		console.log( sWho + "(): SHEMP: After, Moe: $scope.date_filed_from_filter = ", $scope.date_filed_from_filter );
-		console.log( sWho + "(): SHEMP: After, Moe: $scope.date_filed_to_filter = ", $scope.date_filed_to_filter );
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_from_filter = ", $scope.start_date_from_filter );
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_to_filter = ", $scope.start_date_to_filter );
 
-		filterOptions.date_filed_from_filter = $scope.date_filed_from_filter;
-		filterOptions.date_filed_to_filter = $scope.date_filed_to_filter;
+		filterOptions.start_date_from_filter = $scope.start_date_from_filter;
+		filterOptions.start_date_to_filter = $scope.start_date_to_filter;
 
 		//filterOptions.filing_agent_entity_name_varchar_filter = $scope.filing_agent_entity_name_varchar_filter;
 		//filterOptions.filing_agent_cik_bigint_filter = $scope.filing_agent_cik_bigint_filter;
@@ -564,12 +564,12 @@ angular.module('waldoApp')
 			aOutput.push("Task: \"" + options.task_filter + "\""); 	
 		}
 
-		if( options.date_filed_from_filter ){
-			aOutput.push("Date Filed From: \"" + options.date_filed_from_filter + "\""); 	
+		if( options.start_date_from_filter ){
+			aOutput.push("Date Filed From: \"" + options.start_date_from_filter + "\""); 	
 		}
 
-		if( options.date_filed_to_filter ){
-			aOutput.push("Date Filed To: \"" + options.date_filed_to_filter + "\""); 	
+		if( options.start_date_to_filter ){
+			aOutput.push("Date Filed To: \"" + options.start_date_to_filter + "\""); 	
 		}
 
 		//if( options.filing_agent_entity_name_varchar_filter ){
@@ -733,16 +733,16 @@ angular.module('waldoApp')
 	$scope.date_format = 'yyyy-MM-dd';
 
 
-//	$scope.$watch( 'date_filed_from_filter_dt',
+//	$scope.$watch( 'start_date_from_filter_dt',
 //		function(value){
-//			console.log("GEORGE TAKEI: Oh, my..., date_filed_from_filter_dt has changed...");
+//			console.log("GEORGE TAKEI: Oh, my..., start_date_from_filter_dt has changed...");
 //			$scope.synch_date_filed_filter_to_dt();
 //		}
 //	);
 //
-//	$scope.$watch( 'date_filed_to_filter_dt',
+//	$scope.$watch( 'start_date_to_filter_dt',
 //		function(value){
-//			console.log("GEORGE TAKEI: Oh, my..., date_filed_to_filter_dt has changed...");
+//			console.log("GEORGE TAKEI: Oh, my..., start_date_to_filter_dt has changed...");
 //			$scope.synch_date_filed_filter_to_dt();
 //		}
 //	);

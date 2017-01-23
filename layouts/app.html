@@ -67,8 +67,9 @@
 				<!-- </li> -->
 			</ul> <!-- nav navbar-nav -->
 			<ul class="nav navbar-nav navbar-right">
-				<!--<li ng-if="currentUser" class="navbar-brand" style="font-size: 90%;">Logged in as {{currentUser.username}}</li>-->
+				<li ng-if="currentUser" class="navbar-brand" style="font-size: 90%;">Logged in as {{currentUser.username}}</li>
 				<!--<li ng-show="showLoginMenuItem" ng-class="{active: $route.current.activeTab == 'login'}"><a href="/#/login"><span class="glyphicon glyphicon-log-in">&nbsp;Login</a></li>-->
+				<li ng-class="{active: $route.current.activeTab == 'login'}"><a href="/scrummer/#/login">Login</a></li>
 			</ul>
 		</div><!-- navbar-collapse -->
 	</div><!-- container -->

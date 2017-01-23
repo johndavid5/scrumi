@@ -60,8 +60,17 @@ if( sharedUtils.getUrlPrefix().length > 0 ){
 	app.use(sharedUtils.getUrlPrefix() + '/api/formTypes', require('./controllers/api/formTypes'));
 }
 
-//app.use('/api/sessions', require('./controllers/api/sessions'));
-//app.use('/api/users', require('./controllers/api/users'));
+app.use('/api/sessions', require('./controllers/api/sessions'));
+// And mount for possible reverse-proxy prefix as well...
+if( sharedUtils.getUrlPrefix().length > 0 ){
+	app.use(sharedUtils.getUrlPrefix() + '/api/sessions', require('./controllers/api/sessions'));
+}
+
+app.use('/api/users', require('./controllers/api/users'));
+// And mount for possible reverse-proxy prefix as well...
+if( sharedUtils.getUrlPrefix().length > 0 ){
+	app.use(sharedUtils.getUrlPrefix() + '/api/users', require('./controllers/api/users'));
+}
 
 // And mount the static controller for static content...
 // In case we're coming in directly or via reverse proxy via /...
