@@ -3,10 +3,11 @@
 *.obj
 *.swp
 .*.swp
+*.css
 node_modules/
 assets/bower
 assets/app.js
-assets/waldo.styl.css
+assets/sec_forms.css
 Thumbs.db
 versions/
 archive/

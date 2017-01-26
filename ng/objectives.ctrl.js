@@ -3,6 +3,25 @@ angular.module('waldoApp')
 
 	var sWho = "ObjectivesCtrl";
 
+	$scope.editObjective = function(objective){
+		$scope.theObjective = objective;
+		$scope.showModal = true;
+	}
+
+	$scope.showModal = false;
+
+	$scope.openModal = function(){
+		$scope.showModal = true;
+	};
+
+	$scope.okModal = function(){
+		$scope.showModal = false;
+	};
+
+	$scope.cancelModal = function(){
+		$scope.showModal = false;
+	};
+
 	$scope.debug_html = UtilsSvc.stringToBool( $routeParams.debug_html );
 
 	$scope.entities_id_filter = $routeParams.entities_id;

@@ -79,6 +79,85 @@
 
 		</div><!-- class="form-group" -->
 
+		<!-- <button class="btn" ng-click="openModal()">Open Modal</button> -->
+
+  <div ng-show="showModal" ng-class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Edit Objective</h3>
+	</div>
+	<div class="panel-body" style="border: 1px solid purple; padding: 0px;">
+			<table class="table table-striped table-hover table-bordered" style="border: 1px solid green; padding: 0px; margin: 0px;">
+				<thead>
+					<tr ng-cloak>
+						<th class="objective-edit" style="text-align: center;" ng-repeat = "column in columns" width="{{column.width}}">
+						{{column.heading}}
+						</th>
+						<!--
+						<th style="text-align: center;">
+						Project
+						</th>
+						<th style="text-align: center;">
+						Task
+						</th>
+						<th style="text-align: center;">
+						Assigned To
+						</th>
+						<th style="text-align: center;">
+						Duration
+						</th>
+						<th style="text-align: center;">
+						Percent Complete
+						</th>
+						<th style="text-align: center;">
+						Start
+						</th>
+						<th style="text-align: center;">
+						Finish
+						</th>
+						<th style="text-align: center;">
+						Status
+						</th>
+						<th style="text-align: center;">
+						Comments
+						</th>
+						-->
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-cloak>
+						<td class="objective-edit">{{theObjective.project}}</td>
+						<td class="objective-edit">{{theObjective.task_name}}</td>
+						<td class="objective-edit">{{theObjective.assigned_to}}</td>
+						<td class="objective-edit">{{theObjective.duration}}</td>
+						<td class="objective-edit">{{theObjective.percent_complete}}</td>
+						<td class="objective-edit">{{theObjective.start| date:'yyyy-MM-dd'}}</td>
+						<td class="objective-edit">{{theObjective.finish| date:'yyyy-MM-dd'}}</td>
+						<td class="objective-edit">{{theObjective.status}}</td>
+						<td class="objective-edit">{{theObjective.comments}}</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+    <div class="panel-footer">
+      <button class="btn btn-success" ng-click="okModal()">Okay</button>
+      <button class="btn" ng-click="cancelModal()">Cancel</button>
+    </div>
+
+    <!--
+	<div class="modal-header">
+        <h4>Modal Dialog</h4>
+    </div>
+    <div class="modal-body">
+        <p>Example paragraph with some text.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" ng-click="okModal()">Okay</button>
+      <button class="btn" ng-click="cancelModal()">Cancel</button>
+    </div>
+	-->
+  </div>
+
+
 
 <div class="row">
 <table class="col-sm-12" ng-cloak ng-show="debug_html">
@@ -285,7 +364,7 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-cloak ng-repeat="objective in objectives">
+					<tr ng-cloak ng-repeat="objective in objectives" ng-click="editObjective(objective)">
 						<!-- <td ng-repeat = "column in columns">{{objective[column.name]}}</td> -->
 						<!--<td><a ng-href="/scrummer/#/forms/{{objective.accession_number}}" title="View Objective Details">{{objective.accession_number}}</a><a ng-href="{{edgarFileNameToEdgarSecFilingPageUrl(objective.file_name)}}" title="View Filing at SEC" target="_blank"><img src="/scrummer/images/www.sec.gov-favicon.gif" style="padding-left: 10px;"></a></td>-->
 						<td>{{objective.project}}</td>
