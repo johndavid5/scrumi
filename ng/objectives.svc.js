@@ -47,6 +47,31 @@ angular.module('waldoApp')
 	}; /* this.fetch_count() */
 
 
+	// Later try using the $resource service in ng-resource.js if you don't
+	// want to be macho-wacho and use the "raw" $http service...
+	this.updateObjective = function(objective){
+
+		var sWho = "ObjectivesSvc::updateObjective";
+
+		console.log( sWho + "(): SHEMP: Moe, objective = \"" + JSON.stringify( objective ) + "\"...");
+
+		// If we're gonna muck with the objective, we'd better muck 
+		// with a cloned copy of it, or else we'll muck up the caller's
+		// objection Object, n'est-ce pas...?
+		var ourObjective = angular.copy( objective ); 
+
+		console.log( sWho + "(): ourObjective = \"" + JSON.stringify( ourObjective ) + "\"...");
+
+		//var url =  SharedUtilsSvc.getUrlPrefix() + '/api/objectives' + UtilsSvc.propertiesToQueryString(ourOptions);
+		var url =  SharedUtilsSvc.getUrlPrefix() + '/api/objectives';
+
+
+		console.log( sWho + "(): Returning $http.put( ", url, ourObjective, ")...");
+
+		return $http.put( url, ourObjective );
+
+	}; /* this.updateObjective() */
+
 
 	//this.create = function(objective){
 	//	return $http.post('/api/objectives', objective);

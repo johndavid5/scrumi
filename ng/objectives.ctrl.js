@@ -4,22 +4,36 @@ angular.module('waldoApp')
 	var sWho = "ObjectivesCtrl";
 
 	$scope.editObjective = function(objective){
-		$scope.theObjective = objective;
-		$scope.showModal = true;
+
+		// SHEMP: We'd better clone it, Moe...
+		$scope.theObjective = angular.copy(objective);
+
+		$scope.showEditObjective = true;
 	}
 
-	$scope.showModal = false;
+	$scope.showEditObjective = false;
 
 	$scope.openModal = function(){
-		$scope.showModal = true;
+		$scope.showEditObjective = true;
 	};
 
-	$scope.okModal = function(){
-		$scope.showModal = false;
+	$scope.okEditObjective = function(){
+
+   		$scope.start_progress_bar();
+
+		ObjectivesSvc.updateObjective( $scope.theObjective )
+		.success( function onUpdateObjectiveSuccess( objective ) {
+			var sWho = "onUpdateObjectiveSuccess";
+			console.log( sWho + "(): success, Moe...let's launch \$scope.search(0 to refresh the page...");
+			$scope.search();
+
+		});
+
+		$scope.showEditObjective = false;
 	};
 
-	$scope.cancelModal = function(){
-		$scope.showModal = false;
+	$scope.cancelEditObjective = function(){
+		$scope.showEditObjective = false;
 	};
 
 	$scope.debug_html = UtilsSvc.stringToBool( $routeParams.debug_html );

@@ -156,15 +156,84 @@ router.get('/:accessionNumber?', function(req, res, next){
 }); /* get() */
 
 
+router.put('/', function(req, res, next){
 
+	var sWho = "objectives.js::router.put";
+	var sOuterWho = "objectives.js::router.put";
+
+	console.log(sWho + '(): PUT /api/objectives received!');
+
+	console.log(sWho + "(): req.body=", req.body);
+
+	// req.auth automagically filled in
+	// via auth.js middleware...
+	console.log(sWho + "(): req.auth=", req.auth );
+
+	var bAuthRequired = true;
+
+	// If authorization is required and they're not logged in, throw them out on their keisters...
+	if( bAuthRequired && ! req.auth ){
+		var message = "Login required to post a filing.";
+		console.log("Doesn't appear to be logged in, so send message \"" + message + "\" along with response code 401 (unauthorized)...");
+		return res.status(401).send("Login required to post a filing.");
+	}
+
+	var objective = deepcopy( req.body );
+
+	if( req.auth && req.auth.username ){
+		objective.source_modified_varchar = req.auth.username.trim();
+	}
+
+	console.log("objective =", objective );
+
+	console.log(sWho + "(): Calling ourObjectives.putObjective( objective = " + JSON.stringify( objective ) + "...");
+	
+	ourObjectives.putObjective( objective, function(jsonOutput, rowsAffected, err ){
+	
+		//console.log(sWho + "(): jsonOutput =");
+		//console.log( jsonOutput );
+			
+		console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
+	
+		console.log(sWho + "(): rowsAffected = " + rowsAffected );
+
+		console.log(sWho + "(): err =", err, "..." );
+
+		if(err){
+			console.log(sWho + "(): Calling return next(err)...");
+			return next(err);
+		}
+	
+		console.log("Sending res.json(newFiling)...");
+
+		res.header({
+			"Access-Control-Allow-Origin": "*"
+		});
+		res.json( newFiling );
+
+		console.log("Done!");
+
+	});/* ourObjectives.putObjective() */
+
+
+	//res.send(201);
+	// express deprecated res.send(status): Use res.sendStatus(status) instead server.js:33:6
+	//res.sendStatus(201);
+
+	// express deprecated res.send(body, status): Use res.status(status).send(body) instead server.js:36:6
+	//res.send("Let off some steam, Bennett!", 201);
+	//res.status(201).send("<html><body><p>Let off some steam, Bennett!</p></body></html>");
+
+	//console.log(sWho + "(): Done.");
+});
 
 
 router.post('/', function(req, res, next){
 
-	var sWho = "forms.js::router.post";
-	var sOuterWho = "forms.js::router.post";
+	var sWho = "objectives.js::router.post";
+	var sOuterWho = "objectives.js::router.post";
 
-	console.log(sWho + '(): POST /api/forms received!');
+	console.log(sWho + '(): POST /api/objectives received!');
 
 	console.log(sWho + "(): req.body=", req.body);
 
