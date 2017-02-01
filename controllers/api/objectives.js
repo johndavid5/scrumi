@@ -188,12 +188,15 @@ router.put('/', function(req, res, next){
 
 	console.log(sWho + "(): Calling ourObjectives.putObjective( objective = " + JSON.stringify( objective ) + "...");
 	
-	ourObjectives.putObjective( objective, function(jsonOutput, rowsAffected, err ){
+	ourObjectives.updateObjective( objective, function updateObjectiveCallback(jsonOutput, rowsAffected, err ){
 	
 		//console.log(sWho + "(): jsonOutput =");
 		//console.log( jsonOutput );
+		var sWho = sOuterWho + "::updateObjectiveCallback";
 			
 		console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
+
+		console.log( sWho + "(): jsonOutput = ", jsonOutput );
 	
 		console.log(sWho + "(): rowsAffected = " + rowsAffected );
 
@@ -204,12 +207,12 @@ router.put('/', function(req, res, next){
 			return next(err);
 		}
 	
-		console.log("Sending res.json(newFiling)...");
+		console.log("Sending res.json( jsonOutput )...");
 
 		res.header({
 			"Access-Control-Allow-Origin": "*"
 		});
-		res.json( newFiling );
+		res.json( jsonOutput );
 
 		console.log("Done!");
 

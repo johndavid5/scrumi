@@ -284,6 +284,14 @@ function Objectives(){
 
 	}; /* getObjectives() */
 
+	this.updateObjective = function( objective, callback ){
+		var sWho = "Objectives::updateObjective";
+		logger.info( sWho + "(): objective = ", objective );
+
+		// Faux update for now...update MongoDB later...
+		callback( [ objective ], 1, undefined );
+	} /* updateObjective() */
+
 
 	this.getFormTypes = function( options, callback ){
 

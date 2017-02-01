@@ -30,6 +30,7 @@ git add layouts/app.html
 git add models/objectives.js
 
 git add ng/forms-detail.ctrl.js
+git add	ng/login.ctrl.js
 git add	ng/module.js
 git add ng/objectives.ctrl.js
 git add ng/objectives.svc.js

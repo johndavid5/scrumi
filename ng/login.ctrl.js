@@ -1,8 +1,8 @@
 angular.module('waldoApp')
 .controller('LoginCtrl', function($scope, UserSvc, UtilsSvc){
 
-	$scope.username = "monty";
-	$scope.password = "some_pass";
+	$scope.username = "arnie";
+	$scope.password = "pass1234";
 
 	$scope.login = function(username, password){
 		UserSvc.login(username, password)
