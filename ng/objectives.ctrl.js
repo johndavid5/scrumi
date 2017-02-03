@@ -5,8 +5,12 @@ angular.module('waldoApp')
 
 	$scope.editObjective = function(objective){
 
+		var sWho = "ObjectivesCtrl.editObjective";
+
 		// SHEMP: We'd better clone it, Moe...
 		$scope.theObjective = angular.copy(objective);
+
+		console.log(sWho + "(): SHEMP: Clonin' dha objective into $scope.theObjective, Moe: objecive = ", objective, ", $scope.theObjective = ", $scope.theObjective );
 
 		$scope.showEditObjective = true;
 	}
@@ -18,6 +22,10 @@ angular.module('waldoApp')
 	};
 
 	$scope.okEditObjective = function(){
+
+		var sWho = "ObjectivesCtrl.okEditObjective";
+
+		console.log(sWho + "(): SHEMP: Sendin' $scope.theObjective over to ObjectivesSvc.updateObjective(), Moe, $scope.theObjective = ", $scope.theObjective );
 
    		$scope.start_progress_bar();
 

@@ -16,6 +16,11 @@ var config = require('../config');
 //var Company = require('./company'); // use to get Company's associated with a filing...
 var MongoClient = require('mongodb').MongoClient;
 
+var ObjectID = require('mongodb').ObjectID; // use to convert string to ObjectID
+
+var MongoUtils = require('../mongoutils');
+
+
 function Objectives(){
 
 	//this.database = new Database();
@@ -285,11 +290,57 @@ function Objectives(){
 	}; /* getObjectives() */
 
 	this.updateObjective = function( objective, callback ){
+
 		var sWho = "Objectives::updateObjective";
 		logger.info( sWho + "(): objective = ", objective );
 
-		// Faux update for now...update MongoDB later...
-		callback( [ objective ], 1, undefined );
+		var query = { _id: new ObjectID( objective._id )  };
+		var update = { 
+			"project": objective.project,
+			"task_name": objective.task_name,
+			"assigned_to": objective.assigned_to,
+			"duration": objective.duration,
+			"percent_complete": objective.percent_complete,
+			"start": objective.start,
+			"finish": objective.finish,
+			"status": objective.status,
+			"comments": objective.comments,
+			"source_modified": objective.source_modified
+		};
+
+		logger.info(sWho + "(): Connecting to \"" + config.mongoDbScrummerUrl + "\"...");
+
+		MongoClient.connect(config.mongoDbScrummerUrl,
+			function connectCallback(err, db) {
+				var sWho = "connectCallback";
+
+				logger.info(sWho + "(): Using collection \"" + config.mongoDbScrummerObjectivesCollection + "\"...");
+
+  				var collection = db.collection( config.mongoDbScrummerObjectivesCollection );
+
+				logger.info(sWho + "(): Calling collection.updateOne(" ,
+				"query = ", query, ", update = ", update , "...");	 
+
+				collection.updateOne( query, update ) 
+				.then( function(result){
+
+					logger.info(sWho + "(): result = ", result );
+
+					collection.findOne( query )
+					.then(function(item){							
+
+						logger.info(sWho + "(): item from findOne() = ", item );
+
+						// Pass the item to the callback...
+						callback( [ item ], 1, undefined );
+
+					});
+
+				});
+				
+
+
+		});
 	} /* updateObjective() */
 
 
@@ -390,6 +441,23 @@ function Objectives(){
 		];
 		callback( filingRows, filingRows.length, filingErr );  
 
+ngoClient.connect('mongodb://localhost:27017/test', function(err, db) {
+
+  // Get a collection
+  var collection = db.collection('update_a_simple_document_upsert_with_promise');
+  // Update the document using an upsert operation, ensuring creation if it does not exist
+  collection.updateOne({a:1}, {b:2, a:1}, {upsert:true, w: 1})
+	.then(function(result) {
+    test.equal(1, result.result.n);
+
+    // Fetch the document that we modified and check if it got inserted correctly
+    collection.findOne({a:1}).then(function(item) {
+      test.equal(1, item.a);
+      test.equal(2, item.b);
+      db.close();
+    });
+  });
+});
 	}; /* getFormsFaux() */
 
 	
@@ -397,3 +465,5 @@ function Objectives(){
 } /* function Objectives() */
 
 module.exports = Objectives;
+
+

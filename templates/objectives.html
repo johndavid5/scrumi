@@ -133,7 +133,15 @@
 						<td class="objective-edit">{{theObjective.start| date:'yyyy-MM-dd'}}</td>
 						<td class="objective-edit">{{theObjective.finish| date:'yyyy-MM-dd'}}</td>
 						<td class="objective-edit">{{theObjective.status}}</td>
-						<td class="objective-edit" contenteditable="true">{{theObjective.comments}}</td>
+						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div ng-model="theObjective.comments" contenteditable="true"></div></td>-->
+						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div contentEditable="true" ng-model="theObjective.comments" title="Click to edit">Some</div>
+        <pre>model = {{theObjective.comments}}</pre>
+	</td>-->
+<!--
+ John: Try this for "editable td angular 1.X" 
+   https://vitalets.github.io/angular-xeditable/
+-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.comments" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
 					</tr>
 				</tbody>
 			</table>

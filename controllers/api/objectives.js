@@ -181,7 +181,9 @@ router.put('/', function(req, res, next){
 	var objective = deepcopy( req.body );
 
 	if( req.auth && req.auth.username ){
-		objective.source_modified_varchar = req.auth.username.trim();
+		// A little sleazy, but copy username from "auth" into
+		// source_modified_varchar so MongoDb updates accordingly...
+		objective.source_modified = req.auth.username.trim();
 	}
 
 	console.log("objective =", objective );
