@@ -15,6 +15,17 @@ angular.module('waldoApp')
 		$scope.showEditObjective = true;
 	}
 
+	$scope.newObjective = function(objective){
+
+		var sWho = "ObjectivesCtrl.editObjective";
+
+		//$scope.theObjective = $scope.getBlankObjective();
+		$scope.theObjective = $scope.getSampleObjective();
+
+
+		$scope.showEditObjective = true;
+	}
+
 	$scope.showEditObjective = false;
 
 	$scope.openModal = function(){
@@ -29,13 +40,26 @@ angular.module('waldoApp')
 
    		$scope.start_progress_bar();
 
-		ObjectivesSvc.updateObjective( $scope.theObjective )
-		.success( function onUpdateObjectiveSuccess( objective ) {
-			var sWho = "onUpdateObjectiveSuccess";
-			console.log( sWho + "(): success, Moe...let's launch \$scope.search(0 to refresh the page...");
-			$scope.search();
-
-		});
+		if( $scope.theObjective._id == null ){
+			ObjectivesSvc.newObjective( $scope.theObjective )
+			.success( function onNewObjectiveSuccess( objective ) {
+				var sWho = "onNewObjectiveSuccess";
+				console.log( sWho + "(): success, Moe: objective = ", objective );
+				console.log( sWho + "(): success, Moe, let's launch \$scope.search(0 to refresh the page...");
+				$scope.search();
+	
+			});
+		}
+		else {
+			ObjectivesSvc.updateObjective( $scope.theObjective )
+			.success( function onUpdateObjectiveSuccess( objective ) {
+				var sWho = "onUpdateObjectiveSuccess";
+				console.log( sWho + "(): success, Moe: objective = ", objective );
+				console.log( sWho + "(): success, Moe, let's launch \$scope.search(0 to refresh the page...");
+				$scope.search();
+	
+			});
+		}
 
 		$scope.showEditObjective = false;
 	};
@@ -43,6 +67,52 @@ angular.module('waldoApp')
 	$scope.cancelEditObjective = function(){
 		$scope.showEditObjective = false;
 	};
+
+
+	/* 
+	* var example = {
+    *     _id": "586c4823cfe8ccc17840fda4",
+    *     project": "Scrumbag",
+    *     task_name": "Server Read Objectivo",
+    *     assigned_to": "John",
+    *     duration": "1.375 days",
+    *     percent_complete": "25.6",
+    *     start": "2017-01-03",
+    *     finish": "2017-01-10",
+    *     status": "un",
+    *     comments": "Use Angular...",
+    *     source_modified": "arnie"
+	*	};	
+	*/
+	$scope.getBlankObjective = function(){
+		return {
+			"_id": null,
+			"project": "",
+			"task_name": "",
+			"assigned_to": "",
+			"duration": "",
+			"percent_complete": "",
+			"start": "",
+			"finish": "",
+			"status": "",
+			"comments": "",
+		};	
+	}
+
+	$scope.getSampleObjective = function(){
+		return {
+			"_id": null,
+			"project": "Joe-1",
+			"task_name": "Assemble Core",
+			"assigned_to": "Slotin",
+			"duration": "2 days",
+			"percent_complete": "25.75",
+			"start": "1949-08-20",
+			"finish": "1949-08-22",
+			"status": "In Progress",
+			"comments": "Cuidado!",
+		};	
+	}
 
 	$scope.debug_html = UtilsSvc.stringToBool( $routeParams.debug_html );
 

@@ -83,7 +83,8 @@
 
   <div ng-show="showEditObjective" ng-class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title">Edit Objective</h3>
+		<h3 ng-show="theObjective._id != null" class="panel-title">Edit Objective</h3>
+		<h3 ng-show="theObjective._id == null" class="panel-title">New Objective</h3>
 	</div>
 	<div class="panel-body" style="border: 1px solid purple; padding: 0px;">
 			<table class="table table-striped table-hover table-bordered" style="border: 1px solid green; padding: 0px; margin: 0px;">
@@ -125,14 +126,22 @@
 				</thead>
 				<tbody>
 					<tr ng-cloak>
-						<td class="objective-edit">{{theObjective.project}}</td>
-						<td class="objective-edit">{{theObjective.task_name}}</td>
-						<td class="objective-edit">{{theObjective.assigned_to}}</td>
-						<td class="objective-edit">{{theObjective.duration}}</td>
-						<td class="objective-edit">{{theObjective.percent_complete}}</td>
-						<td class="objective-edit">{{theObjective.start| date:'yyyy-MM-dd'}}</td>
-						<td class="objective-edit">{{theObjective.finish| date:'yyyy-MM-dd'}}</td>
-						<td class="objective-edit">{{theObjective.status}}</td>
+						<!--<td class="objective-edit">{{theObjective.project}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.project" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!--<td class="objective-edit">{{theObjective.task_name}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.task_name" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!--<td class="objective-edit">{{theObjective.assigned_to}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.assigned_to" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!--<td class="objective-edit">{{theObjective.duration}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.duration" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!--<td class="objective-edit">{{theObjective.percent_complete}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.percent_complete" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!-- <td class="objective-edit">{{theObjective.start| date:'yyyy-MM-dd'}}</td> -->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.start" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!--<td class="objective-edit">{{theObjective.finish| date:'yyyy-MM-dd'}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.finish" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!-- <td class="objective-edit">{{theObjective.status}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.status" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
 						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div ng-model="theObjective.comments" contenteditable="true"></div></td>-->
 						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div contentEditable="true" ng-model="theObjective.comments" title="Click to edit">Some</div>
         <pre>model = {{theObjective.comments}}</pre>
@@ -247,10 +256,20 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 
 	<div ng-cloak class="row" ng-show="objectives && total_entries >= 0">
 		<div class="col-sm-2"></div>
-		<h2 class="col-sm-7" ng-show="!objectives">Search Objectives</h2>
-		<h2 class="col-sm-7" ng-show="objectives && total_entries >= 0">{{total_entries==0 ? 'No' : ( total_entries | number ) }} Objective<span>{{total_entries == 1 ? '': 's'}} Found</span></h2> 
 
-			<div class="col-sm-1" style="vertical-align: bottom;">
+		<h2 class="col-sm-6" ng-show="!objectives">Search Objectives</h2>
+		<h2 class="col-sm-6" ng-show="objectives && total_entries >= 0">{{total_entries==0 ? 'No' : ( total_entries | number ) }} Objective<span>{{total_entries == 1 ? '': 's'}} Found</span></h2> 
+
+
+		<div class="col-sm-1" style="vertical-align: bottom;">
+                <button
+					style="vertical-align: top; position: relative; top: 23px;"
+                    title="Add New Objective" class="btn btn-default btn-sm"
+                    ng-click="newObjective()"><span class="glyphicon glyphicon-plus"></span>
+				</button>
+        </div>
+
+		<div class="col-sm-1" style="vertical-align: bottom;">
 				<!--
 				<table>
 				<tr>
@@ -258,6 +277,7 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 				-->
 				<button type="submit" style="vertical-align: bottom; position: relative; top: 23px;"
 					title="Search" class="btn btn-default btn-sm" ng-click="search($event)">Search&nbsp;<span class="glyphicon glyphicon-search"></span>
+				</button>
 				<!--
 				</td>
 				<td style="width: 5px;">
@@ -271,9 +291,9 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 				</tr>
 				</table>
 				-->
-			</div>
+		</div>
 
-			<div class="col-sm-1" style="vertical-align: middle;">
+		<div class="col-sm-1" style="vertical-align: middle;">
 				<table ng-cloak ng-show="progress_bar_active"
 					style="position: relative; top: 27px; width: 75px; height: 20px; color: transparent; background-color: transparent;">
 					<tr style="">
@@ -289,14 +309,14 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 					<a ng-click="stop_progress_bar()">stop</a>
 				</div>
 				-->
-			</div>
+		</div>
 
-			<div class="col-sm-1" style="vertical-align: bottom;">
+		<div class="col-sm-1" style="vertical-align: bottom;">
 				<a ng-href="{{csv_url}}" ng-mouseenter="on_mouse_enter_csv_btn()" ng-mouseleave="on_mouse_leave_csv_btn()"
 					ng-click="refresh_csv_url()" title="Download CSV Report" target="_self">
 					<img style="vertical-align: bottom; position: relative; top: 23px;" ng-src="{{csv_btn_img_src}}" />
 				</a>
-			</div>
+		</div>
 	</div>
 
 	</form>

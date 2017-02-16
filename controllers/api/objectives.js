@@ -11,9 +11,9 @@ var FrontMatterMapper = require('../../helpers/FrontMatterMapper');
 
 var router = require('express').Router();
 
-router.get('/:accessionNumber?', function(req, res, next){
+router.get('/:accessionNumber?', function getHandler(req, res, next){
 
-	var sWho = "objectives: router.get";
+	var sWho = "objectives: router.getHandler";
 
 	console.log(sWho + '(): GET /api/objectives received...');
 
@@ -156,9 +156,78 @@ router.get('/:accessionNumber?', function(req, res, next){
 }); /* get() */
 
 
-router.put('/', function(req, res, next){
+router.post('/', function postHandler(req, res, next){
 
-	var sWho = "objectives.js::router.put";
+	var sWho = "objectives.js::router.postHandler";
+	var sOuterWho = "objectives.js::router.post";
+
+	console.log(sWho + '(): POST /api/objectives received!');
+
+	console.log(sWho + "(): req.body=", req.body);
+
+	// req.auth automagically filled in
+	// via auth.js middleware...isn't that neat...?
+	console.log(sWho + "(): req.auth=", req.auth );
+
+	var bAuthRequired = true;
+
+	// If authorization is required and they're not logged in, throw them out on their keisters...
+	if( bAuthRequired && ! req.auth ){
+		var message = "Login required to create an objective.";
+		console.log("Doesn't appear to be logged in, so send message \"" + message + "\" along with response code 401 (unauthorized)...");
+		return res.status(401).send(message);
+	}
+
+	var objective = deepcopy( req.body );
+
+	if( req.auth && req.auth.username ){
+		// A little sleazy, but copy username from "auth" into
+		// source_modified_varchar so MongoDb updates accordingly...
+		objective.source_modified = req.auth.username.trim();
+	}
+
+	console.log("objective =", objective );
+
+	console.log(sWho + "(): Calling ourObjectives.createObjective( objective = " + JSON.stringify( objective ) + "...");
+	
+	ourObjectives.createObjective( objective, function createObjectiveCallback(jsonOutput, rowsAffected, err ){
+	
+		//console.log(sWho + "(): jsonOutput =");
+		//console.log( jsonOutput );
+		var sWho = sOuterWho + "::createObjectiveCallback";
+			
+		console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
+
+		console.log( sWho + "(): jsonOutput = ", jsonOutput );
+	
+		console.log(sWho + "(): rowsAffected = " + rowsAffected );
+
+		console.log(sWho + "(): err =", err, "..." );
+
+		if(err){
+			console.log(sWho + "(): Calling return next(err)...");
+			return next(err);
+		}
+	
+		console.log("Sending res.json( jsonOutput )...");
+
+		res.header({
+			"Access-Control-Allow-Origin": "*"
+		});
+		res.json( jsonOutput );
+
+		console.log("Done!");
+
+	});/* ourObjectives.createObjective() */
+
+
+}); /* router.post(...){} */
+
+
+
+router.put('/', function putHandler(req, res, next){
+
+	var sWho = "objectives.js::router.putHandler";
 	var sOuterWho = "objectives.js::router.put";
 
 	console.log(sWho + '(): PUT /api/objectives received!');
@@ -173,9 +242,9 @@ router.put('/', function(req, res, next){
 
 	// If authorization is required and they're not logged in, throw them out on their keisters...
 	if( bAuthRequired && ! req.auth ){
-		var message = "Login required to post a filing.";
+		var message = "Login required to update an objective.";
 		console.log("Doesn't appear to be logged in, so send message \"" + message + "\" along with response code 401 (unauthorized)...");
-		return res.status(401).send("Login required to post a filing.");
+		return res.status(401).send(message);
 	}
 
 	var objective = deepcopy( req.body );
@@ -230,158 +299,159 @@ router.put('/', function(req, res, next){
 	//res.status(201).send("<html><body><p>Let off some steam, Bennett!</p></body></html>");
 
 	//console.log(sWho + "(): Done.");
-});
+
+}); /* router.put(...){} */
 
 
-router.post('/', function(req, res, next){
-
-	var sWho = "objectives.js::router.post";
-	var sOuterWho = "objectives.js::router.post";
-
-	console.log(sWho + '(): POST /api/objectives received!');
-
-	console.log(sWho + "(): req.body=", req.body);
-
-	// req.auth automagically filled in
-	// via auth.js middleware...
-	console.log(sWho + "(): req.auth=", req.auth );
-
-	var bAuthRequired = false;
-
-	// If authorization is required and they're not logged in, throw them out on their keisters...
-	if( bAuthRequired && ! req.auth ){
-		var message = "Login required to post a filing.";
-		console.log("Doesn't appear to be logged in, so send message \"" + message + "\" along with response code 401 (unauthorized)...");
-		return res.status(401).send("Login required to post a filing.");
-	}
-
-	var options = deepcopy( req.body );
-
-	if( req.auth && req.auth.username ){
-		options.source_modified_varchar = req.auth.username.trim();
-	}
-
-	//console.log("req =");
-	//console.log( req );
-
-	// var newFiling = new Filing({...});
-	// newFiling.username = req.auth.username; 
-	// newFiling.save(function(err, post){
-	//   if(err){ return next(err); }
-    //   res.status(201).json(newFiling)
-	// });
-
-	if( req.body.action == "associatePeopleWithFiling" ){
-
-		ourFiling.associatePeopleWithFiling( req.body, function(jsonOutput, rowsAffected, err ){
-
-			var sWho = sOuterWho + "::associatePeopleWithFiling";
-
-			if( jsonOutput instanceof Array ){
-				console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
-			}
-
-			console.log(sWho + "(): jsonOutput =", jsonOutput );
-	
-			console.log(sWho + "(): rowsAffected = " + rowsAffected );
-	
-			if(err){
-				logger.error(sWho + "(): err = ", err, "...calling return next(err)...");
-				return next(err);
-			}
-	
-			console.log("Sending res.json(jsonOutput)...");
-	
-			res.header({
-				"Access-Control-Allow-Origin": "*"
-			});
-			res.json( jsonOutput );
-	
-			console.log(sWho + "(): Done!");
-
-		});/* ourFiling.associatePeopleWithFiling() */
-
-	}
-	else if( req.body.action == "disAssociatePeopleWithFiling" ){
-
-		ourFiling.disAssociatePeopleWithFiling( req.body, function(jsonOutput, rowsAffected, err ){
-
-			var sWho = sOuterWho + "::disAssociatePeopleWithFiling";
-
-			if( jsonOutput instanceof Array){
-				console.log( sWho + "(): jsonOutput is an Array with jsonOutput.length = " + jsonOutput.length );
-			}
-
-			console.log(sWho + "(): jsonOutput =", jsonOutput );
-	
-			console.log(sWho + "(): rowsAffected = " + rowsAffected );
-	
-			if(err){
-				logger.error(sWho + "(): err = ", err, "...calling return next(err)...");
-				return next(err);
-			}
-	
-			console.log("Sending res.json(jsonOutput)...");
-	
-			res.header({
-				"Access-Control-Allow-Origin": "*"
-			});
-			res.json( jsonOutput );
-	
-			console.log(sWho + "(): Done!");
-
-		});/* ourFiling.disAssociatePeopleWithFiling() */
-
-	}
-	else if( req.body.action == "addFiling" ){
-
-		var newFiling = {
-			"accession_number": req.body.accession_number,
-			"form_type": req.body.form_type,
-			"date_filed": req.body.date_filed,
-			"username": req.auth.username
-		};
-	
-		console.log(sWho + "(): ourFiling.putFiling( newFiling = " + JSON.stringify( newFiling ) + "...");
-	
-		ourFiling.putFiling( newFiling, function(jsonOutput, rowsAffected, err ){
-	
-			//console.log(sWho + "(): jsonOutput =");
-			//console.log( jsonOutput );
-			
-			console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
-	
-			console.log(sWho + "(): rowsAffected = " + rowsAffected );
-	
-			console.log(sWho + "(): err =", err, "..." );
-	
-			if(err){
-				console.log(sWho + "(): Calling return next(err)...");
-				return next(err);
-			}
-	
-			console.log("Sending res.json(newFiling)...");
-	
-			res.header({
-				"Access-Control-Allow-Origin": "*"
-			});
-			res.json( newFiling );
-	
-			console.log("Done!");
-		});/* ourFiling.putFiling() */
-
-
-	} /* if( req.body.action == "addFiling" ) */
-
-	//res.send(201);
-	// express deprecated res.send(status): Use res.sendStatus(status) instead server.js:33:6
-	//res.sendStatus(201);
-
-	// express deprecated res.send(body, status): Use res.status(status).send(body) instead server.js:36:6
-	//res.send("Let off some steam, Bennett!", 201);
-	//res.status(201).send("<html><body><p>Let off some steam, Bennett!</p></body></html>");
-
-	//console.log(sWho + "(): Done.");
-});
+//router.post('/', function(req, res, next){
+//
+//	var sWho = "objectives.js::router.post";
+//	var sOuterWho = "objectives.js::router.post";
+//
+//	console.log(sWho + '(): POST /api/objectives received!');
+//
+//	console.log(sWho + "(): req.body=", req.body);
+//
+//	// req.auth automagically filled in
+//	// via auth.js middleware...
+//	console.log(sWho + "(): req.auth=", req.auth );
+//
+//	var bAuthRequired = false;
+//
+//	// If authorization is required and they're not logged in, throw them out on their keisters...
+//	if( bAuthRequired && ! req.auth ){
+//		var message = "Login required to post a filing.";
+//		console.log("Doesn't appear to be logged in, so send message \"" + message + "\" along with response code 401 (unauthorized)...");
+//		return res.status(401).send("Login required to post a filing.");
+//	}
+//
+//	var options = deepcopy( req.body );
+//
+//	if( req.auth && req.auth.username ){
+//		options.source_modified_varchar = req.auth.username.trim();
+//	}
+//
+//	//console.log("req =");
+//	//console.log( req );
+//
+//	// var newFiling = new Filing({...});
+//	// newFiling.username = req.auth.username; 
+//	// newFiling.save(function(err, post){
+//	//   if(err){ return next(err); }
+//    //   res.status(201).json(newFiling)
+//	// });
+//
+//	if( req.body.action == "associatePeopleWithFiling" ){
+//
+//		ourFiling.associatePeopleWithFiling( req.body, function(jsonOutput, rowsAffected, err ){
+//
+//			var sWho = sOuterWho + "::associatePeopleWithFiling";
+//
+//			if( jsonOutput instanceof Array ){
+//				console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
+//			}
+//
+//			console.log(sWho + "(): jsonOutput =", jsonOutput );
+//	
+//			console.log(sWho + "(): rowsAffected = " + rowsAffected );
+//	
+//			if(err){
+//				logger.error(sWho + "(): err = ", err, "...calling return next(err)...");
+//				return next(err);
+//			}
+//	
+//			console.log("Sending res.json(jsonOutput)...");
+//	
+//			res.header({
+//				"Access-Control-Allow-Origin": "*"
+//			});
+//			res.json( jsonOutput );
+//	
+//			console.log(sWho + "(): Done!");
+//
+//		});/* ourFiling.associatePeopleWithFiling() */
+//
+//	}
+//	else if( req.body.action == "disAssociatePeopleWithFiling" ){
+//
+//		ourFiling.disAssociatePeopleWithFiling( req.body, function(jsonOutput, rowsAffected, err ){
+//
+//			var sWho = sOuterWho + "::disAssociatePeopleWithFiling";
+//
+//			if( jsonOutput instanceof Array){
+//				console.log( sWho + "(): jsonOutput is an Array with jsonOutput.length = " + jsonOutput.length );
+//			}
+//
+//			console.log(sWho + "(): jsonOutput =", jsonOutput );
+//	
+//			console.log(sWho + "(): rowsAffected = " + rowsAffected );
+//	
+//			if(err){
+//				logger.error(sWho + "(): err = ", err, "...calling return next(err)...");
+//				return next(err);
+//			}
+//	
+//			console.log("Sending res.json(jsonOutput)...");
+//	
+//			res.header({
+//				"Access-Control-Allow-Origin": "*"
+//			});
+//			res.json( jsonOutput );
+//	
+//			console.log(sWho + "(): Done!");
+//
+//		});/* ourFiling.disAssociatePeopleWithFiling() */
+//
+//	}
+//	else if( req.body.action == "addFiling" ){
+//
+//		var newFiling = {
+//			"accession_number": req.body.accession_number,
+//			"form_type": req.body.form_type,
+//			"date_filed": req.body.date_filed,
+//			"username": req.auth.username
+//		};
+//	
+//		console.log(sWho + "(): ourFiling.putFiling( newFiling = " + JSON.stringify( newFiling ) + "...");
+//	
+//		ourFiling.putFiling( newFiling, function(jsonOutput, rowsAffected, err ){
+//	
+//			//console.log(sWho + "(): jsonOutput =");
+//			//console.log( jsonOutput );
+//			
+//			console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
+//	
+//			console.log(sWho + "(): rowsAffected = " + rowsAffected );
+//	
+//			console.log(sWho + "(): err =", err, "..." );
+//	
+//			if(err){
+//				console.log(sWho + "(): Calling return next(err)...");
+//				return next(err);
+//			}
+//	
+//			console.log("Sending res.json(newFiling)...");
+//	
+//			res.header({
+//				"Access-Control-Allow-Origin": "*"
+//			});
+//			res.json( newFiling );
+//	
+//			console.log("Done!");
+//		});/* ourFiling.putFiling() */
+//
+//
+//	} /* if( req.body.action == "addFiling" ) */
+//
+//	//res.send(201);
+//	// express deprecated res.send(status): Use res.sendStatus(status) instead server.js:33:6
+//	//res.sendStatus(201);
+//
+//	// express deprecated res.send(body, status): Use res.status(status).send(body) instead server.js:36:6
+//	//res.send("Let off some steam, Bennett!", 201);
+//	//res.status(201).send("<html><body><p>Let off some steam, Bennett!</p></body></html>");
+//
+//	//console.log(sWho + "(): Done.");
+//}); /* router.post() */
 
 module.exports = router;

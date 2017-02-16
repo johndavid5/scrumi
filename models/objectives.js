@@ -18,7 +18,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 var ObjectID = require('mongodb').ObjectID; // use to convert string to ObjectID
 
-var MongoUtils = require('../mongoutils');
+//var MongoUtils = require('../mongoutils');
 
 
 function Objectives(){
@@ -288,6 +288,63 @@ function Objectives(){
 		});/* MongoClient.connect(config.mongoDbUrl, function connectCallback(err, db) */
 
 	}; /* getObjectives() */
+
+
+	this.createObjective = function( objective, callback ){
+
+		var sWho = "Objectives::createObjective";
+		logger.info( sWho + "(): objective = ", objective );
+
+		var doc = { 
+			"project": objective.project,
+			"task_name": objective.task_name,
+			"assigned_to": objective.assigned_to,
+			"duration": objective.duration,
+			"percent_complete": objective.percent_complete,
+			"start": objective.start,
+			"finish": objective.finish,
+			"status": objective.status,
+			"comments": objective.comments,
+			"source_modified": objective.source_modified
+		};
+
+		logger.info(sWho + "(): Connecting to \"" + config.mongoDbScrummerUrl + "\"...");
+
+		MongoClient.connect(config.mongoDbScrummerUrl,
+			function connectCallback(err, db) {
+				var sWho = "connectCallback";
+
+				logger.info(sWho + "(): Using collection \"" + config.mongoDbScrummerObjectivesCollection + "\"...");
+
+  				var collection = db.collection( config.mongoDbScrummerObjectivesCollection );
+
+				logger.info(sWho + "(): Calling collection.insertOne(" ,
+				"doc = ", doc, "...");	 
+
+				collection.insertOne( doc ) 
+				.then( function insertOneCallback(result){
+
+					var sWho = "insertOneCallback";
+
+					logger.info(sWho + "(): result = ", result );
+
+					collection.findOne( doc )
+					.then(function(item){							
+
+						logger.info(sWho + "(): item from findOne() = ", item );
+
+						// Pass the item to the callback...
+						callback( [ item ], 1, undefined );
+
+					});
+
+				});
+				
+
+
+		});
+	} /* createObjective() */
+
 
 	this.updateObjective = function( objective, callback ){
 
