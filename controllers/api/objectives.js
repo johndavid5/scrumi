@@ -289,18 +289,81 @@ router.put('/', function putHandler(req, res, next){
 
 	});/* ourObjectives.putObjective() */
 
+}); /* router.post(...){} */
 
-	//res.send(201);
-	// express deprecated res.send(status): Use res.sendStatus(status) instead server.js:33:6
-	//res.sendStatus(201);
 
-	// express deprecated res.send(body, status): Use res.status(status).send(body) instead server.js:36:6
-	//res.send("Let off some steam, Bennett!", 201);
-	//res.status(201).send("<html><body><p>Let off some steam, Bennett!</p></body></html>");
+router.delete('/:id', function deleteHandler(req, res, next){
 
-	//console.log(sWho + "(): Done.");
+	var sWho = "objectives.js::router.deleteHandler";
+	var sOuterWho = "objectives.js::router.delete";
 
-}); /* router.put(...){} */
+	console.log(sWho + '(): DELETE /api/objectives received!');
+
+	// Cuidado: Only dump the request if you want about 754 lines
+	// of JSON output, Escamillo...
+	//console.log(sWho + "(): req =", req );
+	console.log(sWho + "(): req.params.id = ", req.params.id, "..."); 
+	console.log(sWho + "(): req.body=", req.body);
+
+	// req.auth automagically filled in
+	// via auth.js middleware...
+	console.log(sWho + "(): req.auth=", req.auth );
+
+	var bAuthRequired = true;
+
+	// If authorization is required and they're not logged in, throw them out on their keisters...
+	if( bAuthRequired && ! req.auth ){
+		var message = "Login required to delete an objective.";
+		console.log("Doesn't appear to be logged in, so send message \"" + message + "\" along with response code 401 (unauthorized)...");
+		return res.status(401).send(message);
+	}
+
+	// DELETE requests may not have a body...
+	//var objective = deepcopy( req.body );
+	var objective = { _id: req.params.id };
+
+	if( req.auth && req.auth.username ){
+		// A little sleazy, but copy username from "auth" into
+		// source_modified_varchar so MongoDb updates accordingly...
+		objective.source_modified = req.auth.username.trim();
+	}
+
+	console.log("objective =", objective );
+
+	console.log(sWho + "(): Calling ourObjectives.deleteObjective( objective = " + JSON.stringify( objective ) + "...");
+	
+	ourObjectives.deleteObjective( objective, function deleteObjectiveCallback(jsonOutput, rowsAffected, err ){
+	
+		//console.log(sWho + "(): jsonOutput =");
+		//console.log( jsonOutput );
+		var sWho = sOuterWho + "::deleteObjectiveCallback";
+			
+		console.log( sWho + "(): jsonOutput.length = " + jsonOutput.length );
+
+		console.log( sWho + "(): jsonOutput = ", jsonOutput );
+	
+		console.log(sWho + "(): rowsAffected = " + rowsAffected );
+
+		console.log(sWho + "(): err =", err, "..." );
+
+		if(err){
+			console.log(sWho + "(): Calling return next(err)...");
+			return next(err);
+		}
+	
+		console.log("Sending res.json( jsonOutput )...");
+
+		res.header({
+			"Access-Control-Allow-Origin": "*"
+		});
+		res.json( jsonOutput );
+
+		console.log("Done!");
+
+	});/* ourObjectives.deleteObjective() */
+
+}); /* router.delete(...){} */
+
 
 
 //router.post('/', function(req, res, next){

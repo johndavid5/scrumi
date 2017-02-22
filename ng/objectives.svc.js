@@ -88,12 +88,48 @@ angular.module('waldoApp')
 		//var url =  SharedUtilsSvc.getUrlPrefix() + '/api/objectives' + UtilsSvc.propertiesToQueryString(ourOptions);
 		var url =  SharedUtilsSvc.getUrlPrefix() + '/api/objectives';
 
-
+		// Oh, boy, we're actually using http PUT!
 		console.log( sWho + "(): Returning $http.put( ", url, ourObjective, ")...");
 
 		return $http.put( url, ourObjective );
 
 	}; /* this.updateObjective() */
+
+	this.deleteObjective = function(objective){
+
+		var sWho = "ObjectivesSvc::deleteObjective";
+
+		console.log( sWho + "(): SHEMP: Moe, objective = \"" + JSON.stringify( objective ) + "\"...");
+
+		// If we're gonna muck with the objective, we'd better muck 
+		// with a cloned copy of it, or else we'll muck up the caller's
+		// objective Object, n'est-ce pas...?
+		var ourObjective = angular.copy( objective ); 
+
+		console.log( sWho + "(): ourObjective = \"" + JSON.stringify( ourObjective ) + "\"...");
+
+		//var url =  SharedUtilsSvc.getUrlPrefix() + '/api/objectives' + UtilsSvc.propertiesToQueryString(ourOptions);
+		var url =  SharedUtilsSvc.getUrlPrefix() + '/api/objectives';
+		url += "/" + ourObjective._id;
+
+		// HTTP DELETE request does not necessarily have a body,
+		// so handle it like a GET request...
+		console.log( sWho + "(): Returning $http.delete( ", url, options, ")...");
+
+		var options = {};
+		return $http.delete( url, options );
+
+		//Angular $http.delete shorcut does not support sending data 
+		// try using longhand $http(req) instead... 
+		//var req = {
+		//	method: 'DELETE',
+		//	url: url,
+		//	data: ourObjective 
+		//}
+		//console.log( sWho + "(): Returning $http.( ", req , " )...");
+		//return $http(req);
+
+	}; /* this.deleteObjective() */
 
 
 	//this.create = function(objective){

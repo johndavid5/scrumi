@@ -1,0 +1,11 @@
+1. [x] Authorization
+2. [x] Update Objective Functionality
+3. [x-WED-2017-02-15] Add Objective Functionality
+4. [x-TUE-2017-02-21] Delete Objective Functionality
+5. CSV Download
+6. Inform end user if authorization is required.
+   Perhaps use $http interceptors...
+		https://docs.angularjs.org/api/ng/service/$http#post
+		http://stackoverflow.com/questions/21230417/capture-http-401-with-angular-js-interceptor
+   Or instead of sending HTTP 401 - Unauthorized, send a special
+   error message in the JSON response - {"error": "You must be logged in to delete an objective."};

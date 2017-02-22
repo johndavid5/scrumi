@@ -15,15 +15,41 @@ angular.module('waldoApp')
 		$scope.showEditObjective = true;
 	}
 
-	$scope.newObjective = function(objective){
+	$scope.newObjective = function(){
 
-		var sWho = "ObjectivesCtrl.editObjective";
+		var sWho = "ObjectivesCtrl.newObjective";
 
 		//$scope.theObjective = $scope.getBlankObjective();
 		$scope.theObjective = $scope.getSampleObjective();
 
 
 		$scope.showEditObjective = true;
+	}
+
+	$scope.deleteObjective = function(){
+
+		var sWho = "ObjectivesCtrl.deleteObjective";
+
+		if( $window.confirm("Delete objective " + $scope.theObjective.project + " - " + $scope.theObjective.task_name + "?") ){	
+
+   			$scope.start_progress_bar();
+
+			console.log(sWho + "(): SHEMP: Sendin' $scope.theObjective over to ObjectivesSvc.deleteObjective(), Moe, $scope.theObjective = ", $scope.theObjective );
+
+			ObjectivesSvc.deleteObjective( $scope.theObjective )
+			.success( function onDeleteObjectiveSuccess( objective ) {
+				var sWho = "onDeleteObjectiveSuccess";
+				console.log( sWho + "(): success, Moe: objective = ", objective );
+				console.log( sWho + "(): success, Moe, let's launch \$scope.search(0 to refresh the page...");
+				$scope.search();
+	
+			});
+
+
+			$scope.showEditObjective = false;
+		}
+
+
 	}
 
 	$scope.showEditObjective = false;
@@ -36,11 +62,13 @@ angular.module('waldoApp')
 
 		var sWho = "ObjectivesCtrl.okEditObjective";
 
-		console.log(sWho + "(): SHEMP: Sendin' $scope.theObjective over to ObjectivesSvc.updateObjective(), Moe, $scope.theObjective = ", $scope.theObjective );
 
    		$scope.start_progress_bar();
 
 		if( $scope.theObjective._id == null ){
+
+			console.log(sWho + "(): SHEMP: Sendin' $scope.theObjective over to ObjectivesSvc.newObjective(), Moe, $scope.theObjective = ", $scope.theObjective );
+
 			ObjectivesSvc.newObjective( $scope.theObjective )
 			.success( function onNewObjectiveSuccess( objective ) {
 				var sWho = "onNewObjectiveSuccess";
@@ -51,6 +79,8 @@ angular.module('waldoApp')
 			});
 		}
 		else {
+			console.log(sWho + "(): SHEMP: Sendin' $scope.theObjective over to ObjectivesSvc.updateObjective(), Moe, $scope.theObjective = ", $scope.theObjective );
+
 			ObjectivesSvc.updateObjective( $scope.theObjective )
 			.success( function onUpdateObjectiveSuccess( objective ) {
 				var sWho = "onUpdateObjectiveSuccess";

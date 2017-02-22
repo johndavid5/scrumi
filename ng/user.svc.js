@@ -29,8 +29,8 @@ angular.module('waldoApp')
 			svc.token = val.data;
 			console.log("I have just set svc.token equal to val.data...svc.token = \"" + svc.token + "\"...");
 
-			// NEW!  All request will have the authorization
-			// header attached...neat!
+			// NEW!  All requests will now have the authorization
+			// header attached automagically...isn't that neat!
 			$http.defaults.headers.common['X-Auth'] = val.data;
 			
 			return svc.getUser();

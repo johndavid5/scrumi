@@ -20,6 +20,8 @@ var ObjectID = require('mongodb').ObjectID; // use to convert string to ObjectID
 
 //var MongoUtils = require('../mongoutils');
 
+var test = require('assert');
+
 
 function Objectives(){
 
@@ -343,7 +345,7 @@ function Objectives(){
 
 
 		});
-	} /* createObjective() */
+	}; /* createObjective() */
 
 
 	this.updateObjective = function( objective, callback ){
@@ -398,7 +400,56 @@ function Objectives(){
 
 
 		});
-	} /* updateObjective() */
+	}; /* updateObjective() */
+
+
+	this.deleteObjective = function( objective, callback ){
+
+		var sWho = "Objectives::deleteObjective";
+		logger.info( sWho + "(): objective = ", objective );
+
+		var filter = { _id: new ObjectID( objective._id )  };
+		var options = { };
+
+		logger.info(sWho + "(): Connecting to \"" + config.mongoDbScrummerUrl + "\"...");
+
+		MongoClient.connect(config.mongoDbScrummerUrl,
+			function connectCallback(err, db) {
+				var sWho = "connectCallback";
+
+				logger.info(sWho + "(): Using collection \"" + config.mongoDbScrummerObjectivesCollection + "\"...");
+
+  				var collection = db.collection( config.mongoDbScrummerObjectivesCollection );
+
+				logger.info(sWho + "(): Calling collection.deleteOne(" ,
+				"filter = ", filter, ", options = ", options, "...");	 
+
+				collection.deleteOne( filter, options ) 
+				.then( function deleteCallback(result){
+
+					var sWho = "deleteCallback";
+
+					logger.info(sWho + "(): result = ", result );
+
+					collection.count( filter )
+					.then(function countCallback(count){							
+
+						logger.info(sWho + "(): SHEMP: Count should now be zero, Moe...count( ", filter, " ) = ", count );
+						// Should have been removed, so count
+						// should be zero...
+						test.equal(0, count); 
+
+						// Pass the item to the callback...
+						callback( [ objective ], 1, undefined );
+
+					});
+
+				});
+				
+
+
+		});
+	}; /* deleteObjective() */
 
 
 	this.getFormTypes = function( options, callback ){

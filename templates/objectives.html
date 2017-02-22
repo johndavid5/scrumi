@@ -157,7 +157,14 @@
 	</div>
     <div class="panel-footer">
       <button class="btn btn-success" ng-click="okEditObjective()">Okay</button>
-      <button class="btn" ng-click="cancelEditObjective()">Cancel</button>
+      <button class="btn btn-default" ng-click="cancelEditObjective()">Cancel</button>
+      <button class="btn btn-danger"
+				style="float: right;"
+				ng-show="theObjective._id != null"
+				ng-click="deleteObjective()"
+				title="Delete Objective"
+		><span class="glyphicon glyphicon-minus"></span></button>
+
     </div>
 
     <!--
@@ -312,7 +319,7 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 		</div>
 
 		<div class="col-sm-1" style="vertical-align: bottom;">
-				<a ng-href="{{csv_url}}" ng-mouseenter="on_mouse_enter_csv_btn()" ng-mouseleave="on_mouse_leave_csv_btn()"
+				<a ng-href="{{csv_url}}" ng-mouseenter="on_mouse_enter_csv_btn()" ng-mouseleave="on_mouse_leave_csv_btn()" ng-show="1==0"
 					ng-click="refresh_csv_url()" title="Download CSV Report" target="_self">
 					<img style="vertical-align: bottom; position: relative; top: 23px;" ng-src="{{csv_btn_img_src}}" />
 				</a>
