@@ -1,8 +1,16 @@
 angular.module('waldoApp')
-.controller('LoginCtrl', function($scope, UserSvc, UtilsSvc){
+.controller('LoginCtrl', function($scope, UserSvc, UtilsSvc, $routeParams){
 
-	$scope.username = "arnie";
-	$scope.password = "pass1234";
+
+	$scope.debug_html = UtilsSvc.stringToBool( $routeParams.debug_html );
+
+	$scope.username = $routeParams.username;
+	$scope.password = $routeParams.password; 
+
+	//if(	$scope.debug_html ){
+	//	$scope.username = "arnie";
+	//	$scope.password = "pass1234";
+	//}
 
 	$scope.login = function(username, password){
 		UserSvc.login(username, password)

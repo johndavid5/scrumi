@@ -97,6 +97,21 @@ function Objectives(){
 				}
 			}
 
+			if( options.finish_date_from_filter && sharedUtils.isDateStringValid(options.finish_date_from_filter) ){
+				query.finish = { "$gte": options.finish_date_from_filter }; 
+			}
+
+			if( options.finish_date_to_filter && sharedUtils.isDateStringValid(options.finish_date_to_filter) ){
+				if( query.finish ){
+					// query.finish object already exists, so set "$lte" field...
+					query.finish["$lte"] = options.finish_date_to_filter; 
+				}
+				else {
+					// query.finish object does not already exist, so create it...
+					query.finish = { "$lte": options.finish_date_to_filter }; 
+				}
+			}
+
 			if( options.filer_name_filter ){
 				// e.g., { <field>: { $regex: /pattern/, $options: '<options>' } }
 				query.dn_company_conformed_name = { "$regex": new RegExp('.*' + options.filer_name_filter + '.*', 'i') };

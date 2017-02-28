@@ -293,7 +293,7 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 				<tbody>
 					<tr ng-cloak ng-repeat="filing in filings">
 						<!-- <td ng-repeat = "column in columns">{{filing[column.name]}}</td> -->
-						<td><a ng-href="/scrummer/#/forms/{{filing.accession_number}}" title="View Filing Details">{{filing.accession_number}}</a><a ng-href="{{edgarFileNameToEdgarSecFilingPageUrl(filing.file_name)}}" title="View Filing at SEC" target="_blank"><img src="/scrummer/images/www.sec.gov-favicon.gif" style="padding-left: 10px;"></a></td>
+						<td><a ng-href="/scrumi/#/forms/{{filing.accession_number}}" title="View Filing Details">{{filing.accession_number}}</a><a ng-href="{{edgarFileNameToEdgarSecFilingPageUrl(filing.file_name)}}" title="View Filing at SEC" target="_blank"><img src="/scrumi/images/www.sec.gov-favicon.gif" style="padding-left: 10px;"></a></td>
 						<td>{{filing.form_type}}</td>
 						<td>{{filing.date_filed | date:'yyyy-MM-dd'}}</td>
 						<td>{{filing.dn_company_conformed_name}}</td>

@@ -320,7 +320,7 @@ var SharedUtils = {
 	* http://api/joe would become http://myapp/api/joe
 	*/
 	getUrlPrefix: function( ) {
-		return "/scrummer";
+		return "/scrumi";
 	},
 
 

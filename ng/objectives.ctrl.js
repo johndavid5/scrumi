@@ -1,11 +1,28 @@
 angular.module('waldoApp')
-.controller('ObjectivesCtrl', function($scope, $interval, $window, $routeParams, ConfigSvc, ObjectivesSvc, UtilsSvc, FormTypesSvc, SharedUtilsSvc ){
+.controller('ObjectivesCtrl', function($scope, $interval, $window, $routeParams, ConfigSvc, ObjectivesSvc, UtilsSvc, FormTypesSvc, SharedUtilsSvc, $controller){
 
 	var sWho = "ObjectivesCtrl";
+
+	// This is how we access the ApplicationCtrl for user information...
+    // Of course, it would probably be better to use a shared service,
+    // but it would have to be a stateful service...
+	// http://stackoverflow.com/questions/25417162/how-do-i-inject-a-controller-into-another-controller-in-angularjs
+	var applicationCtrlViewModel = $scope.$new();
+	//You need to supply a scope while instantiating.
+    //Provide the scope, you can also do $scope.$new(true)
+    // in order to create an isolated scope.
+    //In this case it is the child scope of this scope.
+	$controller('ApplicationCtrl', {$scope: applicationCtrlViewModel});
+
+	$scope.getUser = function(){
+		return applicationCtrlViewModel.currentUser;
+	}
 
 	$scope.editObjective = function(objective){
 
 		var sWho = "ObjectivesCtrl.editObjective";
+
+		console.log(sWho + "(): SHEMP: $scope.getUser() = ", $scope.getUser(), "...");
 
 		// SHEMP: We'd better clone it, Moe...
 		$scope.theObjective = angular.copy(objective);
@@ -29,6 +46,11 @@ angular.module('waldoApp')
 	$scope.deleteObjective = function(){
 
 		var sWho = "ObjectivesCtrl.deleteObjective";
+
+		if( ! $scope.getUser() ){
+			$window.alert("Must be logged in to delete objective!");
+			return;
+		}
 
 		if( $window.confirm("Delete objective " + $scope.theObjective.project + " - " + $scope.theObjective.task_name + "?") ){	
 
@@ -61,6 +83,11 @@ angular.module('waldoApp')
 	$scope.okEditObjective = function(){
 
 		var sWho = "ObjectivesCtrl.okEditObjective";
+
+		if( ! $scope.getUser() ){
+			$window.alert("Must be logged in to edit or add objective!");
+			return;
+		}
 
 
    		$scope.start_progress_bar();
@@ -160,6 +187,8 @@ angular.module('waldoApp')
 		+ "&project_filter=" + $scope.project_filter
 		+ "&task_filter=" + $scope.task_filter
 		+ "&start_date_from_filter=" + $scope.start_date_from_filter
+		+ "&finish_date_to_filter=" + $scope.finish_date_to_filter
+		+ "&finish_date_from_filter=" + $scope.finish_date_from_filter
 		+ "&start_date_to_filter=" + $scope.start_date_to_filter
 		+ "&filer_name_filter=" + $scope.filer_name_filter
 		+ "&filer_cik_filter=" + $scope.filer_cik_filter
@@ -186,6 +215,9 @@ angular.module('waldoApp')
 	$scope.start_date_from_filter = "";
 	//$scope.start_date_from_filter = SharedUtilsSvc.firstDayOfThisMonthAsString();
 	//$scope.start_date_from_filter = "2015-07-01"; // Hard code to July 1st, 2015 for now...perhaps use a more sophisticated algorithm later...
+
+	$scope.finish_date_from_filter = "";
+
 	$scope.edgarFileNameToEdgarSecFilingPageUrl = SharedUtilsSvc.edgarFileNameToEdgarSecFilingPageUrl;
 
 	$scope.on_mouse_enter_csv_btn = function(){
@@ -356,6 +388,8 @@ angular.module('waldoApp')
 
 		if( $scope.foolishly_attempt_to_use_angular_date_picker ){
 			$scope.start_date_from_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.start_date_from_filter_dt );
+
+			$scope.finish_date_from_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.finish_date_from_filter_dt );
 		}
 		else {
 			//$scope.start_date_from_filter = UtilsSvc.isNull(  $scope.start_date_from_filter, "" );
@@ -374,6 +408,21 @@ angular.module('waldoApp')
 				$scope.start_date_from_filter = outOptions.formattedDateStringOut;
 				$scope.start_date_from_filter_dt = outOptions.dateObjectOut;
 			}
+
+			if( ! $scope.finish_date_from_filter ){
+				$scope.finish_date_from_filter = "";
+			}
+			$scope.finish_date_from_filter = $scope.finish_date_from_filter.trim();
+
+			if( $scope.finish_date_from_filter.length != 0 ){
+		
+				if( ! SharedUtilsSvc.isDateStringValid( $scope.finish_date_from_filter, outOptions ) ){
+					$window.alert("Date Filed From = '" + $scope.finish_date_from_filter + "' is not a valid date.");
+					return false;
+				}
+				$scope.finish_date_from_filter = outOptions.formattedDateStringOut;
+				$scope.finish_date_from_filter_dt = outOptions.dateObjectOut;
+			}
 		}
 		
 
@@ -381,6 +430,8 @@ angular.module('waldoApp')
 
 		if( $scope.foolishly_attempt_to_use_angular_date_picker ){
 			$scope.start_date_to_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.start_date_to_filter_dt );
+
+			$scope.finish_date_to_filter = SharedUtilsSvc.formatDateObjectAsString( $scope.finish_date_to_filter_dt );
 		}
 		else {
 			//$scope.start_date_to_filter = UtilsSvc.isNull(  $scope.start_date_to_filter, "" );
@@ -398,6 +449,20 @@ angular.module('waldoApp')
 				$scope.start_date_to_filter = outOptions.formattedDateStringOut;
 				$scope.start_date_to_filter_dt = outOptions.dateObjectOut;
 			}
+
+			if( ! $scope.finish_date_to_filter ){
+				$scope.finish_date_to_filter = "";
+			}
+			$scope.finish_date_to_filter = $scope.finish_date_to_filter.trim();
+	
+			if( $scope.finish_date_to_filter.length != 0 ){
+				if( ! SharedUtilsSvc.isDateStringValid( $scope.finish_date_to_filter, outOptions ) ){
+					$window.alert("Date Filed To = '" + $scope.finish_date_to_filter + "' is not a valid date.");
+					return false;
+				}
+				$scope.finish_date_to_filter = outOptions.formattedDateStringOut;
+				$scope.finish_date_to_filter_dt = outOptions.dateObjectOut;
+			}
 		}
 
 		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_from_filter_dt = ", $scope.start_date_from_filter_dt );
@@ -405,6 +470,12 @@ angular.module('waldoApp')
 
 		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_from_filter = ", $scope.start_date_from_filter );
 		console.log( sWho + "(): SHEMP: Before, Moe: $scope.start_date_to_filter = ", $scope.start_date_to_filter );
+
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.finish_date_from_filter_dt = ", $scope.finish_date_from_filter_dt );
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.finish_date_to_filter_dt = ", $scope.finish_date_to_filter_dt );
+
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.finish_date_from_filter = ", $scope.finish_date_from_filter );
+		console.log( sWho + "(): SHEMP: Before, Moe: $scope.finish_date_to_filter = ", $scope.finish_date_to_filter );
 
 		if( $scope.start_date_from_filter_dt instanceof Date 
 			&& $scope.start_date_to_filter_dt instanceof Date 
@@ -423,14 +494,41 @@ angular.module('waldoApp')
 			$scope.start_date_from_filter = le_swapperou;
 		}
 
+		if( $scope.finish_date_from_filter_dt instanceof Date 
+			&& $scope.finish_date_to_filter_dt instanceof Date 
+			&& $scope.finish_date_from_filter_dt.getTime() >  $scope.finish_date_to_filter_dt.getTime() )
+		{
+			console.log( sWho + "(): SHEMP: Sorry, Moe, looks like finish_date_from_filter_dt is greater than finish_date_to_filter_dt, I'm gonna have to swap 'em, Moe...");
+
+			var le_swapperou;
+
+			le_swapperou = $scope.finish_date_to_filter_dt;
+			$scope.finish_date_to_filter_dt = $scope.finish_date_from_filter_dt;
+			$scope.finish_date_from_filter_dt = le_swapperou;
+
+			le_swapperou = $scope.finish_date_to_filter;
+			$scope.finish_date_to_filter = $scope.finish_date_from_filter;
+			$scope.finish_date_from_filter = le_swapperou;
+		}
+
 		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_from_filter_dt = ", $scope.start_date_from_filter_dt );
 		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_to_filter_dt = ", $scope.start_date_to_filter_dt );
 
 		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_from_filter = ", $scope.start_date_from_filter );
 		console.log( sWho + "(): SHEMP: After, Moe: $scope.start_date_to_filter = ", $scope.start_date_to_filter );
 
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.finish_date_from_filter_dt = ", $scope.finish_date_from_filter_dt );
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.finish_date_to_filter_dt = ", $scope.finish_date_to_filter_dt );
+
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.finish_date_from_filter = ", $scope.finish_date_from_filter );
+		console.log( sWho + "(): SHEMP: After, Moe: $scope.finish_date_to_filter = ", $scope.finish_date_to_filter );
+
+
 		filterOptions.start_date_from_filter = $scope.start_date_from_filter;
 		filterOptions.start_date_to_filter = $scope.start_date_to_filter;
+
+		filterOptions.finish_date_from_filter = $scope.finish_date_from_filter;
+		filterOptions.finish_date_to_filter = $scope.finish_date_to_filter;
 
 		//filterOptions.filing_agent_entity_name_varchar_filter = $scope.filing_agent_entity_name_varchar_filter;
 		//filterOptions.filing_agent_cik_bigint_filter = $scope.filing_agent_cik_bigint_filter;
@@ -706,28 +804,44 @@ angular.module('waldoApp')
 		}
 
 		if( options.start_date_from_filter ){
-			aOutput.push("Date Filed From: \"" + options.start_date_from_filter + "\""); 	
+			aOutput.push("Start Date From: \"" + options.start_date_from_filter + "\""); 	
 		}
 
 		if( options.start_date_to_filter ){
-			aOutput.push("Date Filed To: \"" + options.start_date_to_filter + "\""); 	
+			aOutput.push("Start Date To: \"" + options.start_date_to_filter + "\""); 	
+		}
+
+		if( options.finish_date_from_filter ){
+			aOutput.push("Finish Date From: \"" + options.finish_date_from_filter + "\""); 	
+		}
+
+		if( options.finish_date_to_filter ){
+			aOutput.push("Finish Date To: \"" + options.finish_date_to_filter + "\""); 	
 		}
 
 		//if( options.filing_agent_entity_name_varchar_filter ){
 		//	aOutput.push("Filing Agent: \"*" + options.filing_agent_entity_name_varchar_filter + "*\""); 	
 		//}
 		
-		if( options.filer_name_filter ){
-			aOutput.push("Filer Name: \"*" + options.filer_name_filter + "*\""); 	
-		}
+		//if( options.filer_name_filter ){
+		//	aOutput.push("Filer Name: \"*" + options.filer_name_filter + "*\""); 	
+		//}
 
-		if( options.filer_cik_filter ){
-			aOutput.push("Filer CIK: \"*" + options.filer_cik_filter + "*\""); 	
-		}
+		//if( options.start_date_from_filter ){
+		//	aOutput.push("Date Filed From: \"" + options.start_date_from_filter + "\""); 	
+		//}
 
-		if( options.entities_id_filter ){
-			aOutput.push("Entities ID: \"" + options.entities_id_filter + "\""); 	
-		}
+		//if( options.start_date_to_filter ){
+		//	aOutput.push("Date Filed To: \"" + options.start_date_to_filter + "\""); 	
+		//}
+
+		//if( options.filer_cik_filter ){
+		//	aOutput.push("Filer CIK: \"*" + options.filer_cik_filter + "*\""); 	
+		//}
+
+		//if( options.entities_id_filter ){
+		//	aOutput.push("Entities ID: \"" + options.entities_id_filter + "\""); 	
+		//}
 
 		console.log( sWho + "(): aOutput = ", aOutput, "...");
 
