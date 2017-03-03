@@ -9,7 +9,9 @@ git add server.js
 git add server.sh
 git add status.sh
 git add test.sh
+git add todo.txt
 
+git add assets/sec_forms.css
 
 git add css/sec_forms.styl
 git add controllers/api/forms.js
@@ -24,6 +26,9 @@ git add db/mongoit.bat
 git add db/mongoit.sh
 git add db/populate.js
 git add	db/update.js
+
+git add helpers/CsvInator.js
+git add helpers/FrontMatterMapper.js
 
 git add layouts/app.html
 
@@ -41,4 +46,7 @@ git add templates/login.html
 git add templates/objectives.html
 
 git add test/server.js
+
+git add test_archive/n
 set +x
+

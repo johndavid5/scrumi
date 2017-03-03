@@ -112,6 +112,7 @@ CsvInator.prototype._read = function() {
 			// and the header into one big happy buffer and push it...
 
 			str = "";
+			//str = "\uFEFF"; // Try using the BOM to specify utf-8...
 
 			if( outerThis._options.frontMatter && outerThis._options.frontMatter instanceof Array ){
  				logger.debug( sWho + "(): I got front matter, Moe..."); 

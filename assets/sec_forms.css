@@ -237,3 +237,19 @@ p.lydia {
 /* Let off some stylus, Bennett! */
 /* Let off some CSS, Bennett! */
 /* Let off some steam, Bennett! */
+.panel-heading {
+  background-color: #c0c0c0 !important;
+}
+td.objective-edit {
+  background-color: #fff !important;
+}
+th.objective-edit {
+  background-color: #fff !important;
+}
+/*
+.panel > .panel-heading {
+    background-image: none;
+    background-color: red;
+    color: white;
+}
+*/

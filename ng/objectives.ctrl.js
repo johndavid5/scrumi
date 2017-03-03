@@ -268,8 +268,11 @@ angular.module('waldoApp')
 
 	$scope.filter_text_array = [];
 
-	$scope.pending_sort_by = "date_filed";
-	$scope.pending_asc_desc = "desc";
+	// Set pending_sort_by and pending_asc_desc so initial
+	// data grab will be sorted, then these will be loaded
+	// into corresponding values 
+	$scope.pending_sort_by = "project";
+	$scope.pending_asc_desc = "asc";
 
 	$scope.current_sort_by = "";
 	$scope.current_asc_desc = "";

@@ -32,6 +32,19 @@ var FrontMatterMapper = {
 				{"field": "email_address_filter", "field_pretty": "Person Email Address" },
 				{"field": "first_name_filter", "field_pretty": "Person First Name" },
 				{"field": "last_name_filter", "field_pretty": "Person Last Name" },
+
+
+				{"field": "project_filter", "field_pretty": "Project" },
+
+				{"field": "task_filter", "field_pretty": "Task" },
+
+				{"field": "start_date_from_filter", "field_pretty": "Start Date" },
+
+				{"field": "start_date_to_filter", "field_pretty": "Start Date To" },
+
+				{"field": "finish_date_from_filter", "field_pretty": "Finish Date" },
+
+				{"field": "finish_date_to_filter", "field_pretty": "Finish Date To" },
 	],
 
 

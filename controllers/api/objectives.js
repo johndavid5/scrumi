@@ -39,26 +39,30 @@ router.get('/:accessionNumber?', function getHandler(req, res, next){
 
 		console.log(sWho + "(): Looks like a CSV request, Sir...");
 
-		var filename = "forms-report.csv";
+		var filename = "objectives-report.csv";
 		res.setHeader("Content-Type", "text/csv");
+		//console.log(sWho + "(): Setting charset to utf-8..."); 
+		//res.setHeader("Content-Type", "text/csv; charset=utf-8");
 		res.setHeader('Content-disposition', 'attachment; filename=' + filename);
 
-		req.query.getter = function(options,callback){ ourForm.getForms(options,callback); };
+		req.query.getter = function(options,callback){ ourObjectives.getObjectives(options,callback); };
 		req.query.csv = {};
 		//req.query.csv.fieldsPretty = ["Accession Number", "Form Type", "Date Filed", "Subject Company", "Subject Company CIK", "Filing Agent", "Filing Agent CIK"];
-		req.query.csv.fieldsPretty = ["Accession Number", "Form Type", "Date Filed", "Filer Name", "Filer CIK"];
+		//req.query.csv.fieldsPretty = ["Accession Number", "Form Type", "Date Filed", "Filer Name", "Filer CIK"];
+		req.query.csv.fieldsPretty = ["Project", "Task", "Assigned To", "Duration", "% Complete", "Start", "Finish", "Status", "Comments"];
+
 		//req.query.csv.fieldsActual = ["accession_number", "form_type", "date_filed", "subject_company_entity_name_varchar", "subject_company_cik_bigint", "filing_agent_entity_name_varchar", "filing_agent_cik_bigint"];
-		req.query.csv.fieldsActual = ["accession_number", "form_type", "date_filed", "dn_company_conformed_name", "dn_company_central_index_key"];
+		req.query.csv.fieldsActual = ["project", "task_name", "assigned_to", "duration", "percent_complete", "start", "finish", "status", "comments"];
 		req.query.csv.fieldTransforms = [
 			//{"field": "date_filed", "transform": function(row){ return sharedUtils.formatDateObjectAsString(row.date_filed) } },
 			// TypeError: Object 2016-03-31 has no method 'getYear'
     		// at Object.SharedUtils.formatDateObjectAsString (c:\inetpub\wwwroot\sec_forms\mean\ng\shared-utils.svc.js:186:48)
-			{"field": "dn_company_conformed_name", "transform": function(row){ return (row.dn_company_conformed_name ? row.dn_company_conformed_name : ""); } }, // Display "" instead of "null"
-			{"field": "dn_company_central_index_key", "transform": function(row){ return (row.dn_company_central_index_key ? row.dn_company_central_index_key : ""); } }, // Display "" instead of "null"
+			//{"field": "dn_company_conformed_name", "transform": function(row){ return (row.dn_company_conformed_name ? row.dn_company_conformed_name : ""); } }, // Display "" instead of "null"
+			//{"field": "dn_company_central_index_key", "transform": function(row){ return (row.dn_company_central_index_key ? row.dn_company_central_index_key : ""); } }, // Display "" instead of "null"
 		];
 
 		req.query.frontMatter = [];
-		req.query.frontMatter.push("Forms Report");
+		req.query.frontMatter.push("Objectives Report");
 
 		//var sHost = req.headers.host;
 		////var sUrl = req.url;
