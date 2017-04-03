@@ -10,7 +10,10 @@
 		http://stackoverflow.com/questions/21230417/capture-http-401-with-angular-js-interceptor
    Or instead of sending HTTP 401 - Unauthorized, send a special
    error message in the JSON response - {"error": "You must be logged in to delete an objective."};
-7. Finish filters: Assigned To, Duration, %Complete, Status, Comments
+7. [x-2017-04-02] Finish filters: Assigned To, Duration, %Complete, Status, Comments
+
+8. Web Socket Notifications and Updates?
+9. Angular 2?
 
 EXTRA CREDIT:
 7. If we want utf-8 for CSV...

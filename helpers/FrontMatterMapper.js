@@ -38,6 +38,12 @@ var FrontMatterMapper = {
 
 				{"field": "task_filter", "field_pretty": "Task" },
 
+				{"field": "assigned_to_filter", "field_pretty": "Assigned To" },
+
+				{"field": "duration_filter", "field_pretty": "Duration" },
+
+				{"field": "percent_complete_filter", "field_pretty": "Percent Complete" },
+
 				{"field": "start_date_from_filter", "field_pretty": "Start Date" },
 
 				{"field": "start_date_to_filter", "field_pretty": "Start Date To" },
@@ -45,6 +51,10 @@ var FrontMatterMapper = {
 				{"field": "finish_date_from_filter", "field_pretty": "Finish Date" },
 
 				{"field": "finish_date_to_filter", "field_pretty": "Finish Date To" },
+
+				{"field": "status_filter", "field_pretty": "Status" },
+
+				{"field": "comments_filter", "field_pretty": "Comments" },
 	],
 
 

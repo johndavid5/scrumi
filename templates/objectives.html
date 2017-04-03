@@ -29,16 +29,39 @@
 				</span>
 			</div>
 
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="assigned_to_filter">Assigned To:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="assigned_to_filter" name="assigned_to_filter" ng-model="assigned_to_filter" placeholder="">
+				</span>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="duration_filter">Duration:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="duration_filter" name="duration_filter" ng-model="duration_filter" placeholder="">
+				</span>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="percent_complete_filter">% Complete:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="percent_complete_filter" name="percent_complete_filter" ng-model="percent_complete_filter" placeholder="">
+				</span>
+			</div>
+
+
+			<div class="col-sm-2">
+			</div>
+
+		</div><!-- class="form-group" -->
+
+
+		<div class="form-group">
 
 
 			<div class="col-sm-2">
 				<label class="waldo-sm" style="text-align: right;" for="start_date_from_filter">Start&nbsp;Date&nbsp;From:</label>
-				<p class="input-group" ng-show="foolishly_attempt_to_use_angular_date_picker">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="start_date_from_filter_dt" is-open="date_filter_from_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default btn-sm" ng-click="open_close_date_picker($event,'from')"><i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
 				<p class="input-group">
 					<input type="text" class="form-control input-sm datepicker" name="start_date_from_filter" id="start_date_from_filter" ng-model="start_date_from_filter"/>
 					<span class="input-group-btn">
@@ -49,12 +72,6 @@
 
 			<div class="col-sm-2">
 				<label class="waldo-sm"  style="text-align: right;" for="start_date_to_filter">Start&nbsp;Date&nbsp;To:</label>
-				<p class="input-group" ng-show="foolishly_attempt_to_use_angular_date_picker">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="start_date_to_filter_dt" is-open="date_filter_to_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default btn-sm" ng-click="open_close_date_picker($event,'to')"><i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
 				<p class="input-group">
 					<input type="text" class="form-control input-sm datepicker" name="start_date_to_filter" id="start_date_to_filter" ng-model="start_date_to_filter"/>
 					<span class="input-group-btn">
@@ -66,12 +83,6 @@
 
 			<div class="col-sm-2">
 				<label class="waldo-sm" style="text-align: right;" for="finish_date_from_filter">Finish&nbsp;Date&nbsp;From:</label>
-				<p class="input-group" ng-show="foolishly_attempt_to_use_angular_date_picker">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="finish_date_from_filter_dt" is-open="date_filter_from_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default btn-sm" ng-click="open_close_date_picker($event,'from')"><i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
 				<p class="input-group">
 					<input type="text" class="form-control input-sm datepicker" name="finish_date_from_filter" id="finish_date_from_filter" ng-model="finish_date_from_filter"/>
 					<span class="input-group-btn">
@@ -82,12 +93,6 @@
 
 			<div class="col-sm-2">
 				<label class="waldo-sm"  style="text-align: right;" for="finish_date_to_filter">Finish&nbsp;Date&nbsp;To:</label>
-				<p class="input-group" ng-show="foolishly_attempt_to_use_angular_date_picker">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{date_format}}" ng-model="finish_date_to_filter_dt" is-open="date_filter_to_opened" datepicker-options="dateOptions" date-disabled="is_date_disabled(date, mode)" ng-required="false" close-text="Close" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default btn-sm" ng-click="open_close_date_picker($event,'to')"><i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
 				<p class="input-group">
 					<input type="text" class="form-control input-sm datepicker" name="finish_date_to_filter" id="finish_date_to_filter" ng-model="finish_date_to_filter"/>
 					<span class="input-group-btn">
@@ -96,23 +101,124 @@
 				</p>
 			</div>
 
-<!--
 			<div class="col-sm-2">
-				<label class="waldo-sm" style="text-align: right;" for="filer_name_filter">Company Name:</label>
+				<label class="waldo-sm" style="text-align: right;" for="status_filter">Status:</label>
 				<span>
-					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="filer_name_filter" name="filer_name_filter" ng-model="filer_name_filter" placeholder="">
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="status_filter" name="status_filter" ng-model="status_filter" placeholder="">
 				</span>
 			</div>
 
 			<div class="col-sm-2">
-				<label class="waldo-sm" style="text-align: right;" for="filer_cik_filter">Company&nbsp;CIK:</label>
+				<label class="waldo-sm" style="text-align: right;" for="comments_filter">Comments:</label>
 				<span>
-					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="filer_cik_filter" name="filer_cik_filter" ng-model="filer_cik_filter" placeholder="">
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="comments_filter" name="comments_filter" ng-model="comments_filter" placeholder="">
 				</span>
 			</div>
--->
 
 		</div><!-- class="form-group" -->
+
+  <div ng-show="1==0" ng-class="panel panel-default">
+	<div class="panel-heading">
+		<h3 ng-show="theObjective._id == null" class="panel-title">Filters</h3>
+	</div>
+	<div class="panel-body" style="border: 1px solid purple; padding: 0px;">
+			<table class="table table-striped table-hover table-bordered" style="border: 1px solid green; padding: 0px; margin: 0px;">
+				<thead>
+					<tr ng-cloak>
+						<th class="objective-edit" style="text-align: center;" ng-repeat = "column in columns" width="{{column.width}}">
+						{{column.heading}}
+						</th>
+						<!--
+						<th style="text-align: center;">
+						Project
+						</th>
+						<th style="text-align: center;">
+						Task
+						</th>
+						<th style="text-align: center;">
+						Assigned To
+						</th>
+						<th style="text-align: center;">
+						Duration
+						</th>
+						<th style="text-align: center;">
+						Percent Complete
+						</th>
+						<th style="text-align: center;">
+						Start
+						</th>
+						<th style="text-align: center;">
+						Finish
+						</th>
+						<th style="text-align: center;">
+						Status
+						</th>
+						<th style="text-align: center;">
+						Comments
+						</th>
+						-->
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-cloak>
+						<td class="objective-edit"><input type="text" ng-model="project_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<td class="objective-edit"><input type="text" ng-model="task_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						
+						<td class="objective-edit"><input type="text" ng-model="assigned_to_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+					
+						<td class="objective-edit"><input type="text" ng-model="duration_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+
+						<td class="objective-edit"><input type="text" ng-model="percent_complete_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+
+						<td class="objective-edit">
+<label class="waldo-sm" style="text-align: right;" for="start_date_from_filter">From:</label><input type="text" ng-model="start_date_from_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input><br/>
+<label class="waldo-sm" style="text-align: right;" for="start_date_to_filter">To:</label><input type="text" ng-model="start_date_to_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input>
+</td>
+
+						<td class="objective-edit">
+<label class="waldo-sm" style="text-align: right;" for="finish_date_from_filter">From:</label><input type="text" ng-model="finish_date_from_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input><br />
+<label class="waldo-sm" style="text-align: right;" for="finish_date_to_filter">To:</label><input type="text" ng-model="finish_date_to_filter" class="form-control input-sm" style="height: 100%; width: 100%;"></input>
+</td>
+						<!-- <td class="objective-edit">{{theObjective.status}}</td>-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.status" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div ng-model="theObjective.comments" contenteditable="true"></div></td>-->
+						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div contentEditable="true" ng-model="theObjective.comments" title="Click to edit">Some</div>
+        <pre>model = {{theObjective.comments}}</pre>
+	</td>-->
+<!--
+ John: Try this for "editable td angular 1.X" 
+   https://vitalets.github.io/angular-xeditable/
+-->
+						<td class="objective-edit"><input type="text" ng-model="theObjective.comments" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+    <div class="panel-footer">
+      <button class="btn btn-success" ng-click="okEditObjective()">Okay</button>
+      <button class="btn btn-default" ng-click="cancelEditObjective()">Cancel</button>
+      <button class="btn btn-info"
+				style="float: right;"
+				ng-show="theObjective._id != null"
+				ng-click="deleteObjective()"
+				title="Delete Objective"
+		><span class="glyphicon glyphicon-minus"></span></button>
+
+    </div><!-- ng-show="showEditObjective" -->
+
+    <!--
+	<div class="modal-header">
+        <h4>Modal Dialog</h4>
+    </div>
+    <div class="modal-body">
+        <p>Example paragraph with some text.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" ng-click="okModal()">Okay</button>
+      <button class="btn" ng-click="cancelModal()">Cancel</button>
+    </div>
+	-->
+  </div>
 
 		<!-- <button class="btn" ng-click="openEditObjective()">Open Edit Objective</button> -->
 
@@ -200,7 +306,7 @@
 				title="Delete Objective"
 		><span class="glyphicon glyphicon-minus"></span></button>
 
-    </div>
+    </div><!-- ng-show="showEditObjective" -->
 
     <!--
 	<div class="modal-header">

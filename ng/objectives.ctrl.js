@@ -186,6 +186,11 @@ angular.module('waldoApp')
 		$scope.csv_url = $scope.BASE_CSV_URL 
 		+ "&project_filter=" + $scope.project_filter
 		+ "&task_filter=" + $scope.task_filter
+		+ "&assigned_to_filter=" + $scope.assigned_to_filter
+		+ "&duration_filter=" + $scope.duration_filter
+		+ "&percent_complete_filter=" + $scope.percent_complete_filter
+		+ "&status_filter=" + $scope.status_filter
+		+ "&comments_filter=" + $scope.comments_filter
 		+ "&start_date_from_filter=" + $scope.start_date_from_filter
 		+ "&finish_date_to_filter=" + $scope.finish_date_to_filter
 		+ "&finish_date_from_filter=" + $scope.finish_date_from_filter
@@ -282,6 +287,16 @@ angular.module('waldoApp')
 	$scope.project_filter = "";
 
 	$scope.task_filter = "";
+
+	$scope.assigned_to_filter = "";
+
+	$scope.duration_filter = "";
+
+	$scope.percent_complete_filter = "";
+
+	$scope.status_filter = "";
+
+	$scope.comments_filter = "";
 
 	$scope.filer_name_filter = "";
 	$scope.filer_cik_filter = "";
@@ -384,8 +399,23 @@ angular.module('waldoApp')
 
 		$scope.task_filter = UtilsSvc.isNull(  $scope.task_filter, "" );
 
+		$scope.assigned_to_filter = UtilsSvc.isNull(  $scope.assigned_to_filter, "" );
+
+		$scope.duration_filter = UtilsSvc.isNull(  $scope.duration_filter, "" );
+
+		$scope.percent_complete_filter = UtilsSvc.isNull(  $scope.percent_complete_filter, "" );
+
+		$scope.status_filter = UtilsSvc.isNull(  $scope.status_filter, "" );
+
+		$scope.comments_filter = UtilsSvc.isNull(  $scope.comments_filter, "" );
+
 		filterOptions.project_filter = $scope.project_filter;
 		filterOptions.task_filter = $scope.task_filter;
+		filterOptions.assigned_to_filter = $scope.assigned_to_filter;
+		filterOptions.duration_filter = $scope.duration_filter;
+		filterOptions.percent_complete_filter = $scope.percent_complete_filter;
+		filterOptions.status_filter = $scope.status_filter;
+		filterOptions.comments_filter = $scope.comments_filter;
 
 		var outOptions = {};
 
@@ -804,6 +834,26 @@ angular.module('waldoApp')
 
 		if( options.task_filter ){
 			aOutput.push("Task: \"" + options.task_filter + "\""); 	
+		}
+
+		if( options.assigned_to_filter ){
+			aOutput.push("Assigned To: \"" + options.assigned_to_filter + "\""); 	
+		}
+
+		if( options.duration_filter ){
+			aOutput.push("Duration: \"" + options.duration_filter + "\""); 	
+		}
+
+		if( options.percent_complete_filter ){
+			aOutput.push("% Complete: \"" + options.percent_complete_filter + "\""); 	
+		}
+
+		if( options.status_filter ){
+			aOutput.push("Status: \"" + options.status_filter + "\""); 	
+		}
+
+		if( options.comments_filter ){
+			aOutput.push("Comments: \"" + options.comments_filter + "\""); 	
 		}
 
 		if( options.start_date_from_filter ){

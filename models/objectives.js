@@ -82,6 +82,27 @@ function Objectives(){
 				query.task_name = { "$regex": new RegExp('.*' + options.task_filter + '.*', 'i') };
 			}
 
+			if( options.assigned_to_filter ){
+				query.assigned_to = { "$regex": new RegExp('.*' + options.assigned_to_filter + '.*', 'i') };
+			}
+
+			if( options.duration_filter ){
+				query.duration = { "$regex": new RegExp('.*' + options.duration_filter + '.*', 'i') };
+			}
+
+			if( options.percent_complete_filter ){
+				query.percent_complete = { "$regex": new RegExp('.*' + options.percent_complete_filter + '.*', 'i') };
+			}
+
+			if( options.status_filter ){
+				query.status = { "$regex": new RegExp('.*' + options.status_filter + '.*', 'i') };
+			}
+
+			if( options.comments_filter ){
+				query.comments = { "$regex": new RegExp('.*' + options.comments_filter + '.*', 'i') };
+			}
+
+
 			if( options.start_date_from_filter && sharedUtils.isDateStringValid(options.start_date_from_filter) ){
 				query.start = { "$gte": options.start_date_from_filter }; 
 			}
