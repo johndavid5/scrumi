@@ -10,9 +10,9 @@
 
 <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></link> -->
 <!-- <link rel="stylesheet" href="/lib/bootstrap.min.css"></link> --> 
-<link rel="stylesheet" href="/lib/bootstrap.css"></link>
+<link rel="stylesheet" href="/scrumi/lib/bootstrap.css"></link>
 
-<link rel="stylesheet" href="/bower/jquery-ui/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="/scrumi/bower/jquery-ui/themes/smoothness/jquery-ui.css">
 
 <!--<link rel="stylesheet" href="/lib/ng-prettyjson/ng-prettyjson.css"></link>-->
 
@@ -21,14 +21,14 @@
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 <!-- <script src="/lib/jquery.min.js"></script>  -->
 <!-- <script src="/lib/jquery.js"></script> -->
-<script src="/bower/jquery/dist/jquery.js"></script>
-<script src="/bower/jquery-ui/jquery-ui.js"></script>
+<script src="/scrumi/bower/jquery/dist/jquery.js"></script>
+<script src="/scrumi/bower/jquery-ui/jquery-ui.js"></script>
 
 <!--<script src="/lib/jquery.stickytableheaders.min.js"></script>-->
-<script src="/lib/jquery.stickytableheaders.js"></script>
+<script src="/scrumi/lib/jquery.stickytableheaders.js"></script>
 
 <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
-<script src="/lib/bootstrap.min.js"></script> 
+<script src="/scrumi/lib/bootstrap.min.js"></script> 
 
 
 </head>
@@ -43,28 +43,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="#" class="navbar-brand" style="display: table-cell; vertical-align: middle;"><!--<img src="/images/sec-logo.png" alt="Securities and Exchange Commission" style="background-color: transparent; float: left; width: 30px; height: 30px; vertical-align: middle; position: relative; top: -3px;">--><span style="vertical-align: middle; padding-left: 3px;">Scrumi</span></a>
+			<a href="#" class="navbar-brand" style="display: table-cell; vertical-align: middle;"><!--<img src="/scrumi/images/sec-logo.png" alt="Securities and Exchange Commission" style="background-color: transparent; float: left; width: 30px; height: 30px; vertical-align: middle; position: relative; top: -3px;">--><span style="vertical-align: middle; padding-left: 3px;">Scrumi</span></a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class='nav navbar-nav'>
 				<li ng-class="{active: $route.current.activeTab == 'objectives'}"><a href="/scrumi/#/">Objectives</a></li>
-				<li ng-class="{active: $route.current.activeTab == 'forms'}"><a href="/scrumi/#/forms">Forms</a></li>
-				<!--
-				<li ng-class="{active: $route.current.activeTab == 'filings'}"><a href="/#/">Filings</a></li>
-				<li ng-class="{active: $route.current.activeTab == 'entities'}"><a href="/#/entities">Entities</a></li>
-				<li ng-class="{active: $route.current.activeTab == 'people'}"><a href="/#/people">People</a></li>
-				<li ng-class="{active: $route.current.activeTab == 'companies'}"><a href="/#/companies">Companies</a></li>
-				<li ng-class="{active: $route.current.activeTab == 'search'}"><a href="/#/search">Search</a></li> 
-				-->
-				<!-- <li><a href="/#/register">Register</a></li> -->
-				<!-- <li class="dropdown"> -->
-				<!-- <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">New<span class="caret"></span></a> -->
-						<!-- <ul class="dropdown-menu"> -->
-						<!-- <li><a href="/#/companies/new">Company</a></li> -->
-						<!--<li role="separator" class="divider"></li>-->
-						<!--<li><a href="#">Person</a></li>-->
-						<!-- </ul> -->
-				<!-- </li> -->
 			</ul> <!-- nav navbar-nav -->
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="currentUser" class="navbar-brand" style="font-size: 90%;">Logged in as {{currentUser.username}}</li>
@@ -80,26 +63,26 @@
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script> -->
 <!-- <script src="/lib/angular.min.js"></script> -->
 <!-- <script src="/lib/angular.js"></script> -->
-<script src="/bower/angular/angular.js"></script>
+<script src="/scrumi/bower/angular/angular.js"></script>
 
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.min.js"></script> -->
 <!-- <script src="/lib/angular-route.min.js"></script> -->
 <!-- <script src="/lib/angular-route.js"></script> -->
-<script src="/bower/angular-route/angular-route.js"></script>
+<script src="/scrumi/bower/angular-route/angular-route.js"></script>
 
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-cookies.min.js"></script> -->
 <!-- <script src="/lib/angular-cookies.min.js"></script> -->
 <!-- <script src="/lib/angular-cookies.js"></script> -->
-<script src="/bower/angular-cookies/angular-cookies.js"></script>
+<script src="/scrumi/bower/angular-cookies/angular-cookies.js"></script>
 
-<script src="/lib/ng-prettyjson/ng-prettyjson.js"></script>
+<script src="/scrumi/lib/ng-prettyjson/ng-prettyjson.js"></script>
 
-<script src="/bower/angular-animate/angular-animate.js"></script>
+<script src="/scrumi/bower/angular-animate/angular-animate.js"></script>
 
 <!-- ui-bootstrap -->
-<script src="/bower/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="/scrumi/bower/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <!--
- <script src="/bower/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+ <script src="/scrumi/bower/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script> 
  <script src="/lib/ui-bootstrap-tpls.min.js"></script> 
 <script src="/lib/ui-bootstrap-tpls-0.13.0.js">

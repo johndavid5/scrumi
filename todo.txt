@@ -12,8 +12,14 @@
    error message in the JSON response - {"error": "You must be logged in to delete an objective."};
 7. [x-2017-04-02] Finish filters: Assigned To, Duration, %Complete, Status, Comments
 
-8. Web Socket Notifications and Updates?
-9. Angular 2?
+8. Show "updated_by" in GUI somehow...? Details Page?
+                                        Or show details in "Edit"?
+9. Store and show "updated_when" in GUI somehow...?
+
+9. Complete mocha test suite
+10. Use bar-lev directive for progress bar...
+11. Web Socket Notifications and Updates?
+12. Angular 2?
 
 EXTRA CREDIT:
 7. If we want utf-8 for CSV...
