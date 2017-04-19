@@ -1,3 +1,39 @@
+* Gussy Up Landing Page: links and logo's for Angular, NginX, etc.
+
+* Further "automation" of putting in a prefix such as /sec_forms or /scrumi
+
+* LEMP stack and PHPMyAdmin
+
+* VPN on ocean (so you can map to network drive and use gvim)
+
+* Master/Detail pattern as in tour-of-heroes:
+  * use styling to indicate "selected" entry.
+
+* [x-2017-04-19] Tablet Friendly Edit/Update: Use bootstrap columns (as for filters)
+  intstead of a table row
+
+* Table Friendly Edit/Update: See if we can get [+] and [CSV Download]
+  buttons to work on smarthone and tablet.
+
+* Show "updated_by" in GUI somehow...?
+  Details Page?
+  Or show details in "Edit"? (Master/Detail pattern)
+
+* Store and show "updated_when" in GUI somehow...?
+
+* Complete mocha test suite
+
+* Use bar-lev directive for progress bar...
+
+* Web Socket Notifications and Updates?
+
+* email notifications - "You have been assigned this task:"
+  But we'll need to break out "users" first...
+  ...time to go ArangoDB or MySQL...?
+
+* Angular 2?
+
+
 1. [x] Authorization
 2. [x] Update Objective Functionality
 3. [x-WED-2017-02-15] Add Objective Functionality
@@ -12,14 +48,6 @@
    error message in the JSON response - {"error": "You must be logged in to delete an objective."};
 7. [x-2017-04-02] Finish filters: Assigned To, Duration, %Complete, Status, Comments
 
-8. Show "updated_by" in GUI somehow...? Details Page?
-                                        Or show details in "Edit"?
-9. Store and show "updated_when" in GUI somehow...?
-
-9. Complete mocha test suite
-10. Use bar-lev directive for progress bar...
-11. Web Socket Notifications and Updates?
-12. Angular 2?
 
 EXTRA CREDIT:
 7. If we want utf-8 for CSV...

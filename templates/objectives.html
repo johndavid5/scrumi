@@ -118,9 +118,11 @@
 		</div><!-- class="form-group" -->
 
   <div ng-show="1==0" ng-class="panel panel-default">
+
 	<div class="panel-heading">
 		<h3 ng-show="theObjective._id == null" class="panel-title">Filters</h3>
 	</div>
+
 	<div class="panel-body" style="border: 1px solid purple; padding: 0px;">
 			<table class="table table-striped table-hover table-bordered" style="border: 1px solid green; padding: 0px; margin: 0px;">
 				<thead>
@@ -223,12 +225,16 @@
 		<!-- <button class="btn" ng-click="openEditObjective()">Open Edit Objective</button> -->
 
   <div ng-show="showEditObjective" ng-class="panel panel-default">
+
 	<div class="panel-heading">
+
 		<h3 ng-show="theObjective._id != null" class="panel-title">Edit Objective</h3>
 		<h3 ng-show="theObjective._id == null" class="panel-title">New Objective</h3>
 	</div>
-	<div class="panel-body" style="border: 1px solid purple; padding: 0px;">
-			<table class="table table-striped table-hover table-bordered" style="border: 1px solid green; padding: 0px; margin: 0px;">
+
+	<div class="panel-body" style="border: 1px solid purple; padding-left: 5px;">
+
+			<table ng-show="1==0" class="table table-striped table-hover table-bordered" style="border: 1px solid green; padding: 0px; margin: 0px;">
 				<thead>
 					<tr ng-cloak>
 						<th class="objective-edit" style="text-align: center;" ng-repeat = "column in columns" width="{{column.width}}">
@@ -283,18 +289,97 @@
 						<td class="objective-edit"><input type="text" ng-model="theObjective.finish" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
 						<!-- <td class="objective-edit">{{theObjective.status}}</td>-->
 						<td class="objective-edit"><input type="text" ng-model="theObjective.status" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
-						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div ng-model="theObjective.comments" contenteditable="true"></div></td>-->
-						<!--<td class="objective-edit" ng-model="theObjective.comments" contenteditable="true"><div contentEditable="true" ng-model="theObjective.comments" title="Click to edit">Some</div>
-        <pre>model = {{theObjective.comments}}</pre>
-	</td>-->
-<!--
- John: Try this for "editable td angular 1.X" 
-   https://vitalets.github.io/angular-xeditable/
--->
 						<td class="objective-edit"><input type="text" ng-model="theObjective.comments" class="form-control input-sm" style="height: 100%; width: 100%;"></input></td>
 					</tr>
 				</tbody>
 			</table>
+
+		<div class="form-group" ng-show="1==1">
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="project_edit">Project:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="project_edit" name="project_edit" ng-model="theObjective.project" placeholder="">
+				</span>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="task_edit">Task:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="task_edit" name="task_edit" ng-model="theObjective.task_name" placeholder="">
+				</span>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="assigned_to_edit">Assigned To:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="assigned_to_edit" name="assigned_to_edit" ng-model="theObjective.assigned_to" placeholder="">
+				</span>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="duration_edit">Duration:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="duration_edit" name="duration_edit" ng-model="theObjective.duration" placeholder="">
+				</span>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="percent_complete_edit">% Complete:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="percent_complete_edit" name="percent_complete_edit" ng-model="theObjective.percent_complete" placeholder="">
+				</span>
+			</div>
+
+
+			<div class="col-sm-2">
+			</div>
+
+		</div><!-- class="form-group" -->
+
+
+		<div class="form-group" ng-show="1==1">
+
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="start_date_edit">Start&nbsp;Date:</label>
+				<p class="input-group">
+					<input type="text" class="form-control input-sm datepicker" name="start_date_edit" id="start_date_edit" ng-model="theObjective.start"/>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default btn-sm" id="start_date_edit_button"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="finish_date_edit">Finish&nbsp;Date:</label>
+				<p class="input-group">
+					<input type="text" class="form-control input-sm datepicker" name="finish_date_edit" id="finish_date_edit" ng-model="theObjective.finish"/>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default btn-sm" id="finish_date_edit_button"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+			</div>
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="status_edit">Status:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="status_edit" name="status_edit" ng-model="theObjective.status" placeholder="">
+				</span>
+			</div>
+
+
+			<div class="col-sm-2">
+				<label class="waldo-sm" style="text-align: right;" for="comments_edit">Comments:</label>
+				<span>
+					<input type="text" size="20" maxlength="20" class="form-control input-sm" id="comments_edit" name="comments_edit" ng-model="theObjective.comments" placeholder="">
+				</span>
+			</div>
+
+		</div><!-- class="form-group" -->
+
+
+
 	</div>
     <div class="panel-footer">
       <button class="btn btn-success" ng-click="okEditObjective()">Okay</button>
@@ -417,28 +502,11 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 				</button>
         </div>
 
+
 		<div class="col-sm-1" style="vertical-align: bottom;">
-				<!--
-				<table>
-				<tr>
-				<td>
-				-->
 				<button type="submit" style="vertical-align: bottom; position: relative; top: 23px;"
 					title="Search" class="btn btn-default btn-sm" ng-click="search($event)">Search&nbsp;<span class="glyphicon glyphicon-search"></span>
 				</button>
-				<!--
-				</td>
-				<td style="width: 5px;">
-				</td>
-				<td>
-				<a ng-href="{{csv_url}}" ng-mouseenter="on_mouse_enter_csv_btn()" ng-mouseleave="on_mouse_leave_csv_btn()"
-					ng-click="refresh_csv_url()" title="Download CSV Report" target="_self">
-					<img style="vertical-align: bottom; position: relative; top: 23px;" ng-src="{{csv_btn_img_src}}" />
-				</a>
-				</td>
-				</tr>
-				</table>
-				-->
 		</div>
 
 		<div class="col-sm-1" style="vertical-align: middle;">
@@ -647,6 +715,32 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 
 	});
 	*/
+
+	$( "#start_date_edit_button" ).click( function($this){
+
+		//console.log( "click: $this = ", $this, "...");
+
+		if( $("#start_date_edit").datepicker( "widget" ).is(":visible") ){
+			$("#start_date_edit").datepicker("hide");
+		}
+		else {
+			$("#start_date_edit").datepicker("show");
+		}
+
+	});
+
+	$( "#finish_date_edit_button" ).click( function($this){
+
+		//console.log( "click: $this = ", $this, "...");
+
+		if( $("#finish_date_edit").datepicker( "widget" ).is(":visible") ){
+			$("#finish_date_edit").datepicker("hide");
+		}
+		else {
+			$("#finish_date_edit").datepicker("show");
+		}
+
+	});
 
 	// datepicker seems to clear the "input" values...so re-set them here...
 	//$('#start_date').val("<?php echo $startDate; ?>");
