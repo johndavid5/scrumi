@@ -608,9 +608,11 @@ csv_btn_img_src = "{{csv_btn_img_src}}"
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-cloak ng-repeat="objective in objectives" ng-click="editObjective(objective)">
+					<tr ng-cloak ng-repeat="objective in objectives" ng-click="editObjective(objective)" ng-class="get_selected_class_for(objective)">
 						<!-- <td ng-repeat = "column in columns">{{objective[column.name]}}</td> -->
 						<!--<td><a ng-href="/scrumi/#/forms/{{objective.accession_number}}" title="View Objective Details">{{objective.accession_number}}</a><a ng-href="{{edgarFileNameToEdgarSecFilingPageUrl(objective.file_name)}}" title="View Filing at SEC" target="_blank"><img src="/scrumi/images/www.sec.gov-favicon.gif" style="padding-left: 10px;"></a></td>-->
+
+
 						<td>{{objective.project}}</td>
 						<td>{{objective.task_name}}</td>
 						<td>{{objective.assigned_to}}</td>

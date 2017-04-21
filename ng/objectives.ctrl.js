@@ -119,10 +119,12 @@ angular.module('waldoApp')
 		}
 
 		$scope.showEditObjective = false;
+		$scope.theObjective = {};
 	};
 
 	$scope.cancelEditObjective = function(){
 		$scope.showEditObjective = false;
+		$scope.theObjective = {};
 	};
 
 
@@ -633,6 +635,17 @@ angular.module('waldoApp')
 		$scope.search();
 
 	}; /* $scope.go_to_page() */
+
+	$scope.get_selected_class_for = function(objective){
+		// Nota Bene: Can't just say objective == $scope.theObjective
+		// because a clone is being used for editing purposes.
+		if( objective._id == $scope.theObjective._id ){
+			return "selected";
+		}
+		else {
+			return "";
+		}
+	}
 
 	$scope.get_pagination_class_for = function(what){
 		if( what == "previous" || what == "first" ){
