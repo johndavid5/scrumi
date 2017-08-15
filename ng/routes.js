@@ -7,6 +7,13 @@ angular.module('waldoApp').config( function($routeProvider){
 			activeTab: 'objectives'
 		}
 	)
+	.when('/objectives/:id',
+		{
+			controller: 'ObjectivesDetailCtrl',
+			templateUrl: 'objectives-detail.html',
+			activeTab: 'objectives'
+		}
+	)
 	.when('/forms',
 		{
 			controller: 'FormsCtrl',
