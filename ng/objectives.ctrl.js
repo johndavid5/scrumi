@@ -1,5 +1,5 @@
 angular.module('waldoApp')
-.controller('ObjectivesCtrl', function($scope, $interval, $window, $routeParams, ConfigSvc, ObjectivesSvc, UtilsSvc, FormTypesSvc, SharedUtilsSvc, $controller){
+.controller('ObjectivesCtrl', function($scope, $interval, $window, $routeParams, ConfigSvc, ObjectivesSvc, UtilsSvc, SharedUtilsSvc, $controller){
 
 	var sWho = "ObjectivesCtrl";
 
@@ -8,6 +8,7 @@ angular.module('waldoApp')
     // but it would have to be a stateful service...
 	// http://stackoverflow.com/questions/25417162/how-do-i-inject-a-controller-into-another-controller-in-angularjs
 	var applicationCtrlViewModel = $scope.$new();
+
 	//You need to supply a scope while instantiating.
     //Provide the scope, you can also do $scope.$new(true)
     // in order to create an isolated scope.
@@ -27,7 +28,7 @@ angular.module('waldoApp')
 		// SHEMP: We'd better clone it, Moe...
 		$scope.theObjective = angular.copy(objective);
 
-		console.log(sWho + "(): SHEMP: Clonin' dha objective into $scope.theObjective, Moe: objecive = ", objective, ", $scope.theObjective = ", $scope.theObjective );
+		console.log(sWho + "(): SHEMP: Clonin' dha objective into $scope.theObjective, Moe: objective = ", objective, ", $scope.theObjective = ", $scope.theObjective );
 
 		$scope.showEditObjective = true;
 	}
@@ -639,7 +640,7 @@ angular.module('waldoApp')
 	$scope.get_selected_class_for = function(objective){
 		// Nota Bene: Can't just say objective == $scope.theObjective
 		// because a clone is being used for editing purposes.
-		if( objective._id == $scope.theObjective._id ){
+		if( objective && objective._id && $scope.theObjective && $scope.theObjective._id && objective._id == $scope.theObjective._id ){
 			return "selected";
 		}
 		else {

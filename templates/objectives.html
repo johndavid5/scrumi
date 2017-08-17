@@ -117,7 +117,7 @@
 
 		</div><!-- class="form-group" -->
 
-  <div ng-show="1==0" ng-class="panel panel-default">
+  <div ng-if="1==0" ng-class="panel panel-default">
 
 	<div class="panel-heading">
 		<h3 ng-show="theObjective._id == null" class="panel-title">Filters</h3>
@@ -206,7 +206,7 @@
 				title="Delete Objective"
 		><span class="glyphicon glyphicon-minus"></span></button>
 
-    </div><!-- ng-show="showEditObjective" -->
+    </div><!-- class="panel-footer" -->
 
     <!--
 	<div class="modal-header">
@@ -222,9 +222,9 @@
 	-->
   </div>
 
-		<!-- <button class="btn" ng-click="openEditObjective()">Open Edit Objective</button> -->
+  <!-- <button class="btn" ng-click="openEditObjective()">Open Edit Objective</button> -->
 
-  <div ng-show="showEditObjective" ng-class="panel panel-default">
+  <div ng-if="showEditObjective" ng-class="panel panel-default">
 
 	<div class="panel-heading">
 
@@ -391,7 +391,7 @@
 				title="Delete Objective"
 		><span class="glyphicon glyphicon-minus"></span></button>
 
-    </div><!-- ng-show="showEditObjective" -->
+	</div><!-- class="panel-footer" -->
 
     <!--
 	<div class="modal-header">

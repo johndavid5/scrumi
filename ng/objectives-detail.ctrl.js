@@ -1,72 +1,47 @@
 angular.module('waldoApp')
 //.controller('FilingsDetailCtrl', function($scope, FilingsSvc, PeopleSvc, $routeParams){
 // Try using inline injection annotation to avoid problemas with minification...
-.controller('ObjectivesDetailCtrl', ['$scope', 'FormsSvc', 'UtilsSvc', 'SharedUtilsSvc', '$routeParams', '$window', function($scope, FormsSvc, UtilsSvc, SharedUtilsSvc, $routeParams, $window){
+.controller('ObjectivesDetailCtrl', ['$scope', 'ObjectivesSvc', 'UtilsSvc', 'SharedUtilsSvc', '$routeParams', '$window', '$controller', function($scope, ObjectivesSvc, UtilsSvc, SharedUtilsSvc, $routeParams, $window, $controller ){
 
-	$scope.sWho = "FormsDetailCtrl";
+	$scope.sWho = "ObjectivesDetailCtrl";
 
-	$scope.edgarFileNameToEdgarSecFilingPageUrl = SharedUtilsSvc.edgarFileNameToEdgarSecFilingPageUrl;
+	// This is how we access the ApplicationCtrl for user information...
+    // Of course, it would probably be better to use a shared service,
+    // but it would have to be a stateful service...
+	// http://stackoverflow.com/questions/25417162/how-do-i-inject-a-controller-into-another-controller-in-angularjs
+	var applicationCtrlViewModel = $scope.$new();
+
+	//You need to supply a scope while instantiating.
+    //Provide the scope, you can also do $scope.$new(true)
+    // in order to create an isolated scope.
+    //In this case it is the child scope of this scope.
+	$controller('ApplicationCtrl', {$scope: applicationCtrlViewModel});
+
+	$scope.getUser = function(){
+		return applicationCtrlViewModel.currentUser;
+	}
 
 	//$scope.debug_html = false;
 	$scope.debug_html = UtilsSvc.stringToBool( $routeParams.debug_html );
 	//$scope.debug_html = true
 
-	$scope.accession_number = $routeParams.accessionNumber;
+	$scope.id = $routeParams.id;
 
-	console.log($scope.sWho + "(): $scope.accession_number = \"" + $scope.accession_number + "\"...");
+	console.log($scope.sWho + "(): $scope.id = \"" + $scope.id + "\"...");
 
-	$scope.mapee = [];
+	$scope.fetch_objective = function(){
 
-	$scope.map_form = function(){
+		ObjectivesSvc.fetch({accessionNumber: $routeParams.accessionNumber})
 
-		var sWho = "$scope.map_form";
+		.success(function(objectives){
 
-		console.log("FormsDetailCtrl: " + sWho + "()...");
+			console.log("FormsDetailCtrl: SHEMP: Hey, Moe,...I'm setting $scope.objective to objectives[0] = ", objectives[0], "...");
 
-		$scope.mapee = [];
-
-		console.log("FormsDetailCtrl: " + sWho + "(): issuer, Skipper...?");
-		if( $scope.form.issuer && $scope.form.issuer.company_data && $scope.form.issuer.company_data.company_conformed_name.length > 0 ){
-			console.log("FormsDetailCtrl: " + sWho + "(): issuer, Yes, Skipper...?");
-			$scope.mapee.push( { "name": "Issuer", "where": $scope.form.issuer } );			
-		}
-
-		console.log("FormsDetailCtrl: " + sWho + "(): reporting owner, Skipper...?");
-		if( $scope.form.reporting_owner && $scope.form.reporting_owner.company_data.company_conformed_name.length > 0 ){
-			console.log("FormsDetailCtrl: " + sWho + "(): reporting owner, Yes, Skipper...?");
-			$scope.mapee.push( { "name": "Reporting Owner", "where": $scope.form.reporting_owner } );			
-		}
-
-		console.log("FormsDetailCtrl: " + sWho + "(): filed_by, Skipper...?");
-		if( $scope.form.filed_by && $scope.form.filed_by.company_data.company_conformed_name.length > 0 ){
-			console.log("FormsDetailCtrl: " + sWho + "(): filed_by, Yes, Skipper...?");
-			$scope.mapee.push( { "name": "Filed By", "where": $scope.form.filed_by } );			
-		}
-	}
-
-	$scope.fetch_form = function(){
-
-		FormsSvc.fetch({accessionNumber: $routeParams.accessionNumber})
-		.success(function(forms){
-
-			console.log("FormsDetailCtrl: SHEMP: Hey, Moe, I'm setting $scope.form to forms[0] = ", forms[0], ", Moe...");
-
-			$scope.form = forms[0];
-
-			//$scope.map_form();
-
-			// <For debugging only...>
-			//$scope.show_add_people = true;
-			////$scope.email_addresses_entered = "tneher@accelvp.com, edward.ristaino@akerman.com";
-			//$scope.email_addresses_entered = "dbuck@andrewskurth.com, info@appliedminerals.com, joe.kovacs@ptl.com";
-			//$scope.email_addresses_entered = "joe.kovacs@ptl.com, mike.hammer@ptl.com, kim.chee@ptl.com";
-			//$scope.submit_email_addresses_click();
-			//$scope.ciks_entered = "0001118974, 0000812149, 0001504876";
-			// </For debugging only...>
+			$scope.objective = objectives[0];
 		});
-	}; /* $scope.fetch_form() */
+	}; /* $scope.fetch_objective() */
 
-	$scope.fetch_form();
+	$scope.fetch_objective();
 
 }]);
 
