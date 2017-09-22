@@ -1,13 +1,39 @@
+1. Capability to add comments in objectives-details page (which displays history of
+  comments...)...yes, let's
+  once again try using a bootstrap modal dialog or maybe even a jQuery modal
+  dialog...or do we prefer to just have a hidden div like we did for
+  adding and editing objectives in the objectives screen?
+
+2. After "add comments", do re-assign with comments, as in celoxis...
+
+3. prerequisite: to #2: begin using "users" from a dropdown from the
+   users collection, [add login, full name, email ] embedding their ids in the document...
+
+4. admin screens: user new and edit -- login, full-name, email, password,...
+
+5. pre-requisite to #4: assign admin levels, or perhaps simply
+   "admin=true/false" for starters...?
+
+6.  email notifications - "You have been assigned this task:"
+  But we'll need to break out "users" first...
+  ...time to go ArangoDB or MySQL...?
+
+7. begin using "status" from a dropdown from a new collection, similar to celoxis:
+       [ "Open", "In Progress", "Ready for Testing", "Verified", "Completed",
+"Duplicate", "Cancelled", "Z - On Hold"]
+       and how about "Pending"...? 
+
 * Gussy Up Landing Page: links and logo's for Angular, NginX, etc.
 
 * Further "automation" of putting in a prefix such as /sec_forms or /scrumi
 
-* LEMP stack and PHPMyAdmin
+* [x-2017-09-18] LEMP stack and PHPMyAdmin
 
-* VPN on ocean (so you can map to network drive and use gvim)
+* [ON HOLD] VPN on ocean (so you can map to network drive and use gvim)
 
 * Master/Detail pattern as in tour-of-heroes:
   * use styling to indicate "selected" entry.
+  (I thought we already have something like this, no...?)
 
 * [x-2017-04-19] Tablet Friendly Edit/Update: Use bootstrap columns (as for filters)
   intstead of a table row
@@ -27,9 +53,6 @@
 
 * Web Socket Notifications and Updates?
 
-* email notifications - "You have been assigned this task:"
-  But we'll need to break out "users" first...
-  ...time to go ArangoDB or MySQL...?
 
 * Angular 2?
 
